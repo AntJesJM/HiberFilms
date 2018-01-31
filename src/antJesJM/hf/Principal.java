@@ -1,7 +1,7 @@
 package antJesJM.hf;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,15 +27,20 @@ public class Principal extends JFrame {
 			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
 	String[] cabecera = { "id", "Nombre", "Año de Nacimiento" };
 	JTable tabla = new JTable(datos, cabecera);
-	JScrollPane JS = new JScrollPane(tabla);
+	JScrollPane scroll = new JScrollPane(tabla);
 
 	public Principal() {
 		setTitle("Hibernate");
-		setLayout(new GridLayout(1, 1));
-		JS.setPreferredSize(new Dimension(400, 100));
+		setLayout(new FlowLayout());
+		scroll.setPreferredSize(new Dimension(400, 100));
+		actores.setLayout(new FlowLayout());
 
-		actores.add(JS);
-
+		actores.add(scroll);
+		actores.add(btnNew);
+		actores.add(btnDel);
+		actores.add(btnUpd);
+		actores.add(btnSee);
+		
 		
 		pestañas.add("actores", actores);
 		pestañas.add("películas", peliculas);
