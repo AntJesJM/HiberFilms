@@ -1,12 +1,7 @@
 package antJesJM.hf;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,8 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.plaf.basic.BasicGraphicsUtils;
-import javax.swing.text.View;
 
 public class Principal extends JFrame {
 
@@ -43,7 +36,7 @@ public class Principal extends JFrame {
 
 		actores.add(JS);
 
-		//pestañas.setUI(new MyTabbedPaneUI());
+		
 		pestañas.add("actores", actores);
 		pestañas.add("películas", peliculas);
 		pestañas.add("reparto", reparto);
@@ -58,20 +51,7 @@ public class Principal extends JFrame {
 		new Principal();
 	}
 
-	/*public static class MyTabbedPaneUI extends javax.swing.plaf.basic.BasicTabbedPaneUI {
-
-		@Override
-		protected void paintTab(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect,
-				Rectangle textRect) {
-
-			Color savedColor = g.getColor();
-			g.setColor(new Color(185, 9, 11));
-			g.fillRect(rects[tabIndex].x, rects[tabIndex].y, rects[tabIndex].width, rects[tabIndex].height);
-			g.setColor(Color.white);
-			g.drawRect(rects[tabIndex].x, rects[tabIndex].y, rects[tabIndex].width, rects[tabIndex].height);
-			g.setColor(savedColor);
-		}
-	}*/
+	
 
 	
 
