@@ -1,7 +1,9 @@
 package antJesJM.hf;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,10 +17,11 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	JTabbedPane pestañas = new JTabbedPane();
-	JPanel actores = new JPanel();
-	JPanel peliculas = new JPanel();
-	JPanel reparto = new JPanel();
-
+	JPanel actores = new JPanel(new BorderLayout());
+	JPanel peliculas = new JPanel(new BorderLayout());
+	JPanel reparto = new JPanel(new BorderLayout());
+	JPanel pnlBtnActores = new JPanel(new GridLayout(1,4));
+	
 	JButton btnNew = new JButton("Nuevo");
 	JButton btnDel = new JButton("Borrar");
 	JButton btnUpd = new JButton("Modificar");
@@ -31,16 +34,15 @@ public class Principal extends JFrame {
 
 	public Principal() {
 		setTitle("Hibernate");
-		setLayout(new FlowLayout());
+		setLayout(new GridLayout(1, 1));
 		scroll.setPreferredSize(new Dimension(400, 100));
-		actores.setLayout(new FlowLayout());
 
-		actores.add(scroll);
-		actores.add(btnNew);
-		actores.add(btnDel);
-		actores.add(btnUpd);
-		actores.add(btnSee);
-		
+		actores.add("Center",scroll);
+		pnlBtnActores.add(btnNew);
+		pnlBtnActores.add(btnDel);
+		pnlBtnActores.add(btnUpd);
+		pnlBtnActores.add(btnSee);
+		actores.add("South",pnlBtnActores);
 		
 		pestañas.add("actores", actores);
 		pestañas.add("películas", peliculas);
