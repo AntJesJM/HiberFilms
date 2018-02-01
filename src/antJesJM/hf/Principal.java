@@ -17,36 +17,81 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	JTabbedPane pestañas = new JTabbedPane();
+	
 	JPanel actores = new JPanel(new BorderLayout());
 	JPanel peliculas = new JPanel(new BorderLayout());
 	JPanel reparto = new JPanel(new BorderLayout());
-	JPanel pnlBtnActores = new JPanel(new GridLayout(1,4));
 	
-	JButton btnNew = new JButton("Nuevo");
-	JButton btnDel = new JButton("Borrar");
-	JButton btnUpd = new JButton("Modificar");
-	JButton btnSee = new JButton("Ver");
-	String[][] datos = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
+	JPanel pnlBtnActores = new JPanel(new GridLayout(1,4));
+	JPanel pnlBtnPeliculas = new JPanel(new GridLayout(1,4));
+	JPanel pnlBtnReparto = new JPanel(new GridLayout(1,4));
+	
+	JButton btnNewActor = new JButton("Nuevo");
+	JButton btnDelActor = new JButton("Borrar");
+	JButton btnUpdActor = new JButton("Modificar");
+	JButton btnSeeActor = new JButton("Ver");
+	
+	JButton btnNewPelicula = new JButton("Nuevo");
+	JButton btnDelPelicula = new JButton("Borrar");
+	JButton btnUpdPelicula = new JButton("Modificar");
+	JButton btnSeePelicula = new JButton("Ver");
+	
+	JButton btnNewReparto = new JButton("Nuevo");
+	JButton btnDelReparto = new JButton("Borrar");
+	JButton btnUpdReparto = new JButton("Modificar");
+	JButton btnSeeReparto = new JButton("Ver");
+	
+	
+	
+	String[][] datosActor = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
 			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
-	String[] cabecera = { "id", "Nombre", "Año de Nacimiento" };
-	JTable tabla = new JTable(datos, cabecera);
-	JScrollPane scroll = new JScrollPane(tabla);
+	String[] cabeceraActor = { "id", "Nombre", "Año de Nacimiento" };
+	JTable tablaActor = new JTable(datosActor, cabeceraActor);
+	JScrollPane scrollActor = new JScrollPane(tablaActor);
+	
+	String[][] datosPelicula = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
+			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
+	String[] cabeceraPelicula = { "id", "titulo", "Año" };
+	JTable tablaPelicula = new JTable(datosPelicula, cabeceraPelicula);
+	JScrollPane scrollPelicula = new JScrollPane(tablaPelicula);
+
+	String[][] datosReparto = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
+			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
+	String[] cabeceraReparto = { "id", "papel", "premio" };
+	JTable tablaReparto = new JTable(datosReparto, cabeceraReparto);
+	JScrollPane scrollReparto = new JScrollPane(tablaReparto);
 
 	public Principal() {
 		setTitle("Hibernate");
 		setLayout(new GridLayout(1, 1));
-		scroll.setPreferredSize(new Dimension(400, 100));
+		scrollActor.setPreferredSize(new Dimension(400, 100));
+		scrollPelicula.setPreferredSize(new Dimension(400, 100));
+		scrollReparto.setPreferredSize(new Dimension(400, 100));
 
-		actores.add("Center",scroll);
-		pnlBtnActores.add(btnNew);
-		pnlBtnActores.add(btnDel);
-		pnlBtnActores.add(btnUpd);
-		pnlBtnActores.add(btnSee);
+		actores.add("Center",scrollActor);
+		pnlBtnActores.add(btnNewActor);
+		pnlBtnActores.add(btnDelActor);
+		pnlBtnActores.add(btnUpdActor);
+		pnlBtnActores.add(btnSeeActor);
 		actores.add("South",pnlBtnActores);
 		
-		pestañas.add("actores", actores);
-		pestañas.add("películas", peliculas);
-		pestañas.add("reparto", reparto);
+		peliculas.add("Center",scrollPelicula);
+		pnlBtnPeliculas.add(btnNewPelicula);
+		pnlBtnPeliculas.add(btnDelPelicula);
+		pnlBtnPeliculas.add(btnUpdPelicula);
+		pnlBtnPeliculas.add(btnSeePelicula);
+		peliculas.add("South",pnlBtnPeliculas);
+		
+		reparto.add("Center",scrollReparto);
+		pnlBtnReparto.add(btnNewReparto);
+		pnlBtnActores.add(btnDelReparto);
+		pnlBtnActores.add(btnUpdReparto);
+		pnlBtnActores.add(btnSeeReparto);
+		reparto.add("South",pnlBtnReparto);
+		
+		pestañas.addTab("actores", actores);
+		pestañas.addTab("películas", peliculas);
+		pestañas.addTab("reparto", reparto);
 		add(pestañas);
 
 		setSize(500, 300);
