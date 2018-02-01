@@ -84,9 +84,9 @@ public class Principal extends JFrame {
 		
 		reparto.add("Center",scrollReparto);
 		pnlBtnReparto.add(btnNewReparto);
-		pnlBtnActores.add(btnDelReparto);
-		pnlBtnActores.add(btnUpdReparto);
-		pnlBtnActores.add(btnSeeReparto);
+		pnlBtnReparto.add(btnDelReparto);
+		pnlBtnReparto.add(btnUpdReparto);
+		pnlBtnReparto.add(btnSeeReparto);
 		reparto.add("South",pnlBtnReparto);
 		
 		pestañas.addTab("actores", actores);
