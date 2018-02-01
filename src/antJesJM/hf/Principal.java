@@ -45,7 +45,7 @@ public class Principal extends JFrame {
 	
 	String[][] datosActor = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
 			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
-	String[] cabeceraActor = { "id", "Nombre", "Año de Nacimiento" };
+	String[] cabeceraActor = { "id", "Nombre", "Nacionalidad" };
 	JTable tablaActor = new JTable(datosActor, cabeceraActor);
 	JScrollPane scrollActor = new JScrollPane(tablaActor);
 	
