@@ -2,8 +2,9 @@ package antJesJM.hf;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,10 +12,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
-public class Principal extends JFrame {
+import actores.Añadir;
+
+public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	Añadir an = new Añadir();
 
 	JTabbedPane pestañas = new JTabbedPane();
 	
@@ -101,6 +107,12 @@ public class Principal extends JFrame {
 		tablaActor.getTableHeader().setReorderingAllowed(false);
 		tablaPelicula.getTableHeader().setReorderingAllowed(false);
 		tablaReparto.getTableHeader().setReorderingAllowed(false);
+		
+		tablaActor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablaPelicula.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablaReparto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		btnNewActor.addActionListener(this);
 
 		setSize(500, 300);
 		setVisible(true);
@@ -109,6 +121,15 @@ public class Principal extends JFrame {
 
 	public static void main(String[] args) {
 		new Principal();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		
+		if (o.equals(btnNewActor)){
+			an.setVisible(true);
+		}
+		
 	}
 
 	
