@@ -93,6 +93,14 @@ public class Principal extends JFrame {
 		pestañas.addTab("películas", peliculas);
 		pestañas.addTab("reparto", reparto);
 		add(pestañas);
+		
+		tablaActor.setDefaultEditor(Object.class, null);
+		tablaPelicula.setDefaultEditor(Object.class, null);
+		tablaReparto.setDefaultEditor(Object.class, null);
+		
+		tablaActor.getTableHeader().setReorderingAllowed(false);
+		tablaPelicula.getTableHeader().setReorderingAllowed(false);
+		tablaReparto.getTableHeader().setReorderingAllowed(false);
 
 		setSize(500, 300);
 		setVisible(true);
