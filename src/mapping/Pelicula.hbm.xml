@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="clases.Pelicula" table="pelicula">
+		<id name="idPelicula" type="java.lang.Integer">
+			<column name="idPelicula" />
+			<generator class="native" />
+		</id>
+		<property name="titulo" type="string">
+			<column name="titulo" length="70" not-null="false" />
+		</property>
+		<property name="anio" type="int">
+			<column name="anio" length="4" not-null="false" />
+		</property>
+		<property name="genero" type="string">
+			<column name="genero" length="20" not-null="false" />
+		</property>
+		<property name="director" type="string">
+			<column name="director" length="30" not-null="false" />
+		</property>
+		<set name="reparto">
+			<key>
+				<column name="pelicula" not-null="true" />
+			</key>
+			<one-to-many class="clases.Reparto" />
+		</set>
+	</class>
+</hibernate-mapping>
