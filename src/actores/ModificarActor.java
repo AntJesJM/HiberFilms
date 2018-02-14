@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 public class ModificarActor extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	JDialog dlgconfirmar = new JDialog();
 	JLabel lblconf = new JLabel("¿Está seguro de que quiere modificar?");
 	JButton btnconfirm = new JButton("Aceptar");
@@ -79,9 +79,9 @@ public class ModificarActor extends JFrame implements ActionListener {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 
 	}
-	
+
 	public static void main(String[] args) {
-		new AnyadirActor();
+		new ModificarActor();
 	}
 
 	public void actionPerformed(ActionEvent e) {
