@@ -38,9 +38,11 @@ public class Añadir extends JFrame implements ActionListener {
 	JButton btnCancelar = new JButton("Cancelar");
 
 	public Añadir() {
-
+		setTitle("Añadir Actor");
 		setSize(300, 200);
-
+		setResizable(false);
+		
+		dlgconfirmar.setTitle("Confirmación");
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));

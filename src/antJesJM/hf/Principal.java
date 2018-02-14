@@ -15,12 +15,14 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import actores.Añadir;
+import actores.Borrar;
 
 public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	Añadir an = new Añadir();
+	Borrar b = new Borrar();
 
 	JTabbedPane pestañas = new JTabbedPane();
 	
@@ -68,6 +70,7 @@ public class Principal extends JFrame implements ActionListener {
 	JScrollPane scrollReparto = new JScrollPane(tablaReparto);
 
 	public Principal() {
+		setResizable(false);
 		setTitle("Hibernate");
 		setLayout(new GridLayout(1, 1));
 		scrollActor.setPreferredSize(new Dimension(400, 100));
@@ -113,6 +116,8 @@ public class Principal extends JFrame implements ActionListener {
 		tablaReparto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		btnNewActor.addActionListener(this);
+		btnDelActor.addActionListener(this);
+		
 
 		setSize(500, 300);
 		setVisible(true);
@@ -129,7 +134,9 @@ public class Principal extends JFrame implements ActionListener {
 		if (o.equals(btnNewActor)){
 			an.setVisible(true);
 		}
-		
+		if(o.equals(btnDelActor)) {
+			b.setVisible(true);
+		}
 	}
 
 	
