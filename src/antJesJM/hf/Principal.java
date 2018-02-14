@@ -124,7 +124,7 @@ public class Principal extends JFrame implements ActionListener {
 
 		setSize(500, 300);
 		setVisible(true);
-
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
