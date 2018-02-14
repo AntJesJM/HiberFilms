@@ -12,12 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AnyadirActor extends JFrame implements ActionListener {
-
+public class ModificarActor extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-
+	
 	JDialog dlgconfirmar = new JDialog();
-	JLabel lblconf = new JLabel("¿Está seguro de que quiere añadir?");
+	JLabel lblconf = new JLabel("¿Está seguro de que quiere modificar?");
 	JButton btnconfirm = new JButton("Aceptar");
 	JButton btncanc = new JButton("Cancelar");
 
@@ -34,11 +33,11 @@ public class AnyadirActor extends JFrame implements ActionListener {
 	JTextField txtNacionalidad = new JTextField();
 	JTextField txtEdad = new JTextField();
 
-	JButton btnGrabar = new JButton("Grabar");
+	JButton btnConfirm = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 
-	public AnyadirActor() {
-		setTitle("Añadir Actor");
+	public ModificarActor() {
+		setTitle("Modificar Actor");
 		setSize(300, 200);
 		setResizable(false);
 
@@ -56,13 +55,13 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		panelDatos.add(lblEdad);
 		panelDatos.add(txtEdad);
 
-		panelBotones.add(btnGrabar);
+		panelBotones.add(btnConfirm);
 		panelBotones.add(btnCancelar);
 
 		add(panelDatos);
 		add(panelBotones);
 
-		btnGrabar.addActionListener(this);
+		btnConfirm.addActionListener(this);
 		btnCancelar.addActionListener(this);
 
 		btnconfirm.addActionListener(this);
@@ -80,7 +79,7 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 
 	}
-
+	
 	public static void main(String[] args) {
 		new AnyadirActor();
 	}
@@ -90,7 +89,7 @@ public class AnyadirActor extends JFrame implements ActionListener {
 
 		if (o.equals(btnCancelar)) {
 			setVisible(false);
-		} else if (o.equals(btnGrabar)) {
+		} else if (o.equals(btnConfirm)) {
 			dlgconfirmar.setVisible(true);
 
 		}

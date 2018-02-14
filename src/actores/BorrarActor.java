@@ -13,7 +13,7 @@ public class BorrarActor extends JFrame implements ActionListener{
 	
 	
 	JLabel borrado = new JLabel("Desea borrar el actor:");
-	JLabel actor = new JLabel("pepe");
+	JLabel actor = new JLabel("");
 	
 	JButton btnAceptar = new JButton("Aceptar");
 	JButton btnCancelar = new JButton("Cancelar");
