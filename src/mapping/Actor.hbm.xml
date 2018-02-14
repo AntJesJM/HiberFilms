@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="clases.Actor" table="actor">
+		<id name="idActor" type="java.lang.Integer">
+			<column name="idActor" />
+			<generator class="native" />
+		</id>
+		<property name="nombre" type="string">
+			<column name="nombre" length="30" not-null="false" />
+		</property>
+		<property name="apellido" type="string">
+			<column name="apellido" length="45" not-null="false" />
+		</property>
+		<property name="edad" type="int">
+			<column name="edad" length="3" not-null="false" />
+		</property>
+
+		<property name="nacionalidad" type="string">
+			<column name="nacionalidad" length="30" not-null="false" />
+		</property>
+		<set name="reparto">
+			<key>
+				<column name="actor" not-null="true" />
+			</key>
+			<one-to-many class="clases.Reparto" />
+		</set>
+	</class>
+</hibernate-mapping>
