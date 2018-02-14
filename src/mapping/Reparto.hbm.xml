@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="clases.Reparto" table="reparto">
+		<id name="idReparto" type="java.lang.Integer">
+			<column name="idReparto" />
+			<generator class="native" />
+		</id>
+		<property name="papel" type="string">
+			<column name="papel" length="20" not-null="false" />
+		</property>
+		<property name="premio" type="yes_no">
+			<column name="premio" not-null="false" />
+		</property>
+		<many-to-one name="pelicula">
+			<column name="pelicula" not-null="true" />
+		</many-to-one>
+		<many-to-one name="actor">
+			<column name="actor" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

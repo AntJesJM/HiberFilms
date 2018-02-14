@@ -17,6 +17,7 @@ import javax.swing.ListSelectionModel;
 import actores.AnyadirActor;
 import actores.BorrarActor;
 import actores.ModificarActor;
+import actores.VerActor;
 
 public class Principal extends JFrame implements ActionListener {
 
@@ -25,6 +26,7 @@ public class Principal extends JFrame implements ActionListener {
 	AnyadirActor aa = new AnyadirActor();
 	BorrarActor ba = new BorrarActor();
 	ModificarActor ma = new ModificarActor();
+	VerActor va = new VerActor();
 
 	JTabbedPane pestañas = new JTabbedPane();
 
@@ -118,6 +120,7 @@ public class Principal extends JFrame implements ActionListener {
 		btnNewActor.addActionListener(this);
 		btnDelActor.addActionListener(this);
 		btnUpdActor.addActionListener(this);
+		btnSeeActor.addActionListener(this);
 
 		setSize(500, 300);
 		setVisible(true);
@@ -131,24 +134,17 @@ public class Principal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		/*
-		if (o.equals(btnNewActor)) {
-			aa.setVisible(true);
-		}
-		if (o.equals(btnDelActor)) {
-			ba.setVisible(true);
-		}
-		if(o.equals(btnUpdActor)) {
-			ma.setVisible(true);
-		}
-		*/
-		
-		//El código siguente hace lo mismo que las lineas comentadas anteriormente
+		 * if (o.equals(btnNewActor)) { aa.setVisible(true); } if
+		 * (o.equals(btnDelActor)) { ba.setVisible(true); } if(o.equals(btnUpdActor)) {
+		 * ma.setVisible(true); }
+		 */
+
+		// El código siguente hace lo mismo que las lineas comentadas anteriormente
 		aa.setVisible(o.equals(btnNewActor));
 		ba.setVisible(o.equals(btnDelActor));
 		ma.setVisible(o.equals(btnUpdActor));
-		
-		
-		
+		va.setVisible(o.equals(btnSeeActor));
+
 	}
 
 }
