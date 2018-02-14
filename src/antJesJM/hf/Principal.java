@@ -14,15 +14,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import actores.Añadir;
-import actores.Borrar;
+import actores.AnyadirActor;
+import actores.BorrarActor;
 
 public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	Añadir an = new Añadir();
-	Borrar b = new Borrar();
+	AnyadirActor an = new AnyadirActor();
+	BorrarActor b = new BorrarActor();
 
 	JTabbedPane pestañas = new JTabbedPane();
 	

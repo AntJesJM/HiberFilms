@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Añadir extends JFrame implements ActionListener {
+public class AnyadirActor extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class Añadir extends JFrame implements ActionListener {
 	JButton btnGrabar = new JButton("Grabar");
 	JButton btnCancelar = new JButton("Cancelar");
 
-	public Añadir() {
+	public AnyadirActor() {
 		setTitle("Añadir Actor");
 		setSize(300, 200);
 		setResizable(false);
@@ -84,7 +84,7 @@ public class Añadir extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new Añadir();
+		new AnyadirActor();
 	}
 
 	public void actionPerformed(ActionEvent e) {

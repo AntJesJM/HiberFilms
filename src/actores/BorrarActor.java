@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Borrar extends JFrame implements ActionListener{
+public class BorrarActor extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -19,7 +19,7 @@ public class Borrar extends JFrame implements ActionListener{
 	JButton btnCancelar = new JButton("Cancelar");
 	
 	
-	public Borrar() {
+	public BorrarActor() {
 		setTitle("Borrar Actor");
 		setSize(250,150);
 		setResizable(false);
@@ -50,7 +50,7 @@ public class Borrar extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		new Borrar();
+		new BorrarActor();
 	}
 	
 	
