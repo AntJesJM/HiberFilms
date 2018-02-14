@@ -11,7 +11,7 @@ public class Actor implements Serializable {
 	private String apellido;
 	private String nacionalidad;
 	private int edad;
-	//private Set<Reparto> reparto;
+	private Set<Reparto> reparto;
 
 	public Actor() {
 	}
@@ -23,13 +23,13 @@ public class Actor implements Serializable {
 		this.edad=edad;
 	}
 	
-//	public Actor(String nombre, String apellido, String nacionalidad, int edad, Set<Reparto> reparto) {
-//		this.nombre = nombre;
-//		this.apellido = apellido;
-//		this.nacionalidad = nacionalidad;
-//		this.edad=edad;
-//		this.reparto=reparto;
-//	}
+	public Actor(String nombre, String apellido, String nacionalidad, int edad, Set<Reparto> reparto) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.nacionalidad = nacionalidad;
+		this.edad=edad;
+		this.reparto=reparto;
+	}
 
 	public Integer getIdActor() {
 		return idActor;
@@ -71,13 +71,13 @@ public class Actor implements Serializable {
 		this.edad = edad;
 	}
 
-//	public Set<Reparto> getReparto() {
-//		return reparto;
-//	}
-//
-//	public void setReparto(Set<Reparto> reparto) {
-//		this.reparto = reparto;
-//	}
+	public Set<Reparto> getReparto() {
+		return reparto;
+	}
+
+	public void setReparto(Set<Reparto> reparto) {
+		this.reparto = reparto;
+	}
 
 	
 }

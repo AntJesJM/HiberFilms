@@ -12,7 +12,7 @@ public class Pelicula implements Serializable {
 	private int anio;
 	private String genero;
 	private String director;
-//	private Set<Reparto> reparto;
+	private Set<Reparto> reparto;
 
 	public Pelicula() {
 	}
@@ -23,12 +23,12 @@ public class Pelicula implements Serializable {
 		this.genero = genero;
 	}
 	
-//	public Pelicula(String titulo, int anio, String genero, Set<Reparto> reparto) {
-//		this.titulo = titulo;
-//		this.anio = anio;
-//		this.genero = genero;
-//		this.reparto=reparto;
-//	}
+	public Pelicula(String titulo, int anio, String genero, Set<Reparto> reparto) {
+		this.titulo = titulo;
+		this.anio = anio;
+		this.genero = genero;
+		this.reparto=reparto;
+	}
 
 
 	public Integer getIdPelicula() {
@@ -71,12 +71,12 @@ public class Pelicula implements Serializable {
 		this.director = director;
 	}
 
-//	public Set<Reparto> getReparto() {
-//		return reparto;
-//	}
-//
-//	public void setReparto(Set<Reparto> reparto) {
-//		this.reparto = reparto;
-//	}
+	public Set<Reparto> getReparto() {
+		return reparto;
+	}
+
+	public void setReparto(Set<Reparto> reparto) {
+		this.reparto = reparto;
+	}
 	
 }
