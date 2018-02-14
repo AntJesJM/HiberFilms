@@ -130,7 +130,7 @@ public class Principal extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
+		/*
 		if (o.equals(btnNewActor)) {
 			aa.setVisible(true);
 		}
@@ -140,6 +140,15 @@ public class Principal extends JFrame implements ActionListener {
 		if(o.equals(btnUpdActor)) {
 			ma.setVisible(true);
 		}
+		*/
+		
+		//El código siguente hace lo mismo que las lineas comentadas anteriormente
+		aa.setVisible(o.equals(btnNewActor));
+		ba.setVisible(o.equals(btnDelActor));
+		ma.setVisible(o.equals(btnUpdActor));
+		
+		
+		
 	}
 
 }

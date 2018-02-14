@@ -47,6 +47,7 @@ public class BorrarActor extends JFrame implements ActionListener{
 			setVisible(false);
 		}
 		
+		
 	}
 	
 	public static void main(String[] args) {
