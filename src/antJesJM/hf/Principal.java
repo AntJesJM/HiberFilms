@@ -18,15 +18,28 @@ import actores.AnyadirActor;
 import actores.BorrarActor;
 import actores.ModificarActor;
 import actores.VerActor;
+import reparto.AnyadirReparto;
+import reparto.BorrarReparto;
+import reparto.ModificarReparto;
+import reparto.VerReparto;
 
 public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
+	//Tabla Actor
 	AnyadirActor aa = new AnyadirActor();
 	BorrarActor ba = new BorrarActor();
 	ModificarActor ma = new ModificarActor();
 	VerActor va = new VerActor();
+	//Tabla Pelicula
+	
+	//Tabla Reparto
+	AnyadirReparto ar = new AnyadirReparto();
+	BorrarReparto br = new BorrarReparto();
+	ModificarReparto mr = new ModificarReparto();
+	VerReparto vr = new VerReparto();
+	
 
 	JTabbedPane pestañas = new JTabbedPane();
 
@@ -117,11 +130,19 @@ public class Principal extends JFrame implements ActionListener {
 		tablaPelicula.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaReparto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+		//Listeners del panel de Actor
 		btnNewActor.addActionListener(this);
 		btnDelActor.addActionListener(this);
 		btnUpdActor.addActionListener(this);
 		btnSeeActor.addActionListener(this);
-
+		//Listeners del panel de Pelicula
+		
+		//Listeners del panel de Reparto
+		btnNewReparto.addActionListener(this);
+		btnDelReparto.addActionListener(this);
+		btnUpdReparto.addActionListener(this);
+		btnSeeReparto.addActionListener(this);
+		
 		setSize(500, 300);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -139,12 +160,22 @@ public class Principal extends JFrame implements ActionListener {
 		 * ma.setVisible(true); }
 		 */
 
-		// El código siguente hace lo mismo que las lineas comentadas anteriormente
+		/* El código siguente hace lo mismo que las lineas comentadas anteriormente
+		 * Acciones de los botones de Actor
+		 */
 		aa.setVisible(o.equals(btnNewActor));
 		ba.setVisible(o.equals(btnDelActor));
 		ma.setVisible(o.equals(btnUpdActor));
 		va.setVisible(o.equals(btnSeeActor));
 
+		//Acciones de los botones de Pelicula
+		
+		//Acciones de los botones de Reparto
+		ar.setVisible(o.equals(btnNewReparto));
+//		br.setVisible(o.equals(btnDelReparto));
+//		mr.setVisible(o.equals(btnUpdReparto));
+//		vr.setVisible(o.equals(btnSeeReparto));
+//		
 	}
 
 }
