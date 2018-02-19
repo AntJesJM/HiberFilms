@@ -14,6 +14,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.hibernate.Session;
+
 import actores.AnyadirActor;
 import actores.BorrarActor;
 import actores.ModificarActor;
@@ -22,11 +24,12 @@ import reparto.AnyadirReparto;
 import reparto.BorrarReparto;
 import reparto.ModificarReparto;
 import reparto.VerReparto;
+import util.HibernateUtil;
 
 public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-
+	public static Session session = HibernateUtil.getSession();
 	//Tabla Actor
 	AnyadirActor aa = new AnyadirActor();
 	BorrarActor ba = new BorrarActor();
