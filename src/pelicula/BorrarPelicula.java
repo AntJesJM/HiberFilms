@@ -1,4 +1,4 @@
-package actor;
+package pelicula;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -8,23 +8,23 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class BorrarActor extends JFrame implements ActionListener {
+public class BorrarPelicula extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
-	JLabel lblBorrado = new JLabel("Desea borrar el actor:");
-	JLabel lblActor = new JLabel("");
+	JLabel lblBorrado = new JLabel("Desea borrar esta película:");
+	JLabel lblPelicula = new JLabel("");
 
 	JButton btnAceptar = new JButton("Aceptar");
 	JButton btnCancelar = new JButton("Cancelar");
 
-	public BorrarActor() {
-		setTitle("Borrar Actor");
+	public BorrarPelicula() {
+		setTitle("Borrar Película");
 		setSize(250, 150);
 		setResizable(false);
 		setLayout(new FlowLayout());
 
 		add(lblBorrado);
-		add(lblActor);
+		add(lblPelicula);
 		add(btnAceptar);
 		add(btnCancelar);
 
@@ -47,7 +47,7 @@ public class BorrarActor extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new BorrarActor();
+		new BorrarPelicula();
 	}
 
 }
