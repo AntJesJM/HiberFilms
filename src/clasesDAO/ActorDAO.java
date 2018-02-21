@@ -40,11 +40,11 @@ public class ActorDAO {
 	}
 	
 	public static List<Actor> buscarTodos() {
-
 		@SuppressWarnings("unchecked")
-		TypedQuery<Actor> query = (TypedQuery<Actor>) Principal.session.createQuery("FROM Actor");
-		List<Actor> result = query.getResultList();
+		TypedQuery<Actor> query = Principal.session.createQuery("FROM Actor");
+		//Query consulta = Principal.session.createQuery()
+	    List<Actor> result = query.getResultList();
 		return result;
-	}
+		}
 
 }

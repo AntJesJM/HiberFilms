@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,6 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import antJesJM.hf.Principal;
+import clases.Actor;
+import clasesDAO.ActorDAO;
 
 public class AnyadirActor extends JFrame implements ActionListener {
 
@@ -29,10 +35,10 @@ public class AnyadirActor extends JFrame implements ActionListener {
 	JLabel lblNacionalidad = new JLabel("nacionalidad");
 	JLabel lblEdad = new JLabel("edad");
 
-	JTextField txtNombre = new JTextField();
-	JTextField txtApellido = new JTextField();
-	JTextField txtNacionalidad = new JTextField();
-	JTextField txtEdad = new JTextField();
+	static JTextField txtNombre = new JTextField();
+	static JTextField txtApellido = new JTextField();
+	static JTextField txtNacionalidad = new JTextField();
+	static JTextField txtEdad = new JTextField();
 
 	JButton btnGrabar = new JButton("Grabar");
 	JButton btnCancelar = new JButton("Cancelar");
@@ -97,10 +103,36 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		if (o.equals(btnconfirm)) {
 			dlgconfirmar.setVisible(false);
 			setVisible(false);
+			CrearActor();
 		} else if (o.equals(btncanc)) {
 			dlgconfirmar.setVisible(false);
 		}
 
+	}
+	
+	public static void VaciarActor() {
+		txtNombre.setText("");
+		txtApellido.setText("");
+		txtEdad.setText("");
+		txtNacionalidad.setText("");
+	}
+	
+	public void CrearActor() {
+		List<Actor> buscar = ActorDAO.buscarTodos();
+		int id = 0;
+		
+		int filas = Principal.tablaActor.getRowCount();
+		
+		for(Actor a:buscar) {
+			if(a.getIdActor()>id) {
+				id = a.getIdActor();
+			}
+		}
+		id++;
+		Actor actor = new Actor(txtNombre.getText(),txtApellido.getText(),txtNacionalidad.getText(),Integer.parseInt(txtEdad.getText()));
+		ActorDAO.guardar(actor);
+		Principal.ActualizarTabla();
+		setVisible(false);
 	}
 
 }

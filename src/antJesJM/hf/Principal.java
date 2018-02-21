@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 import org.hibernate.Session;
 
@@ -21,6 +24,8 @@ import actor.AnyadirActor;
 import actor.BorrarActor;
 import actor.ModificarActor;
 import actor.VerActor;
+import clases.Actor;
+import clasesDAO.ActorDAO;
 import reparto.AnyadirReparto;
 import reparto.BorrarReparto;
 import reparto.ModificarReparto;
@@ -31,19 +36,18 @@ public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	public static Session session = HibernateUtil.getSession();
-	//Tabla Actor
+	// Tabla Actor
 	AnyadirActor aa = new AnyadirActor();
 	BorrarActor ba = new BorrarActor();
 	ModificarActor ma = new ModificarActor();
 	VerActor va = new VerActor();
-	//Tabla Pelicula
-	
-	//Tabla Reparto
+	// Tabla Pelicula
+
+	// Tabla Reparto
 	AnyadirReparto ar;
 	BorrarReparto br = new BorrarReparto();
 	ModificarReparto mr = new ModificarReparto();
 	VerReparto vr = new VerReparto();
-	
 
 	JTabbedPane pestañas = new JTabbedPane();
 
@@ -70,11 +74,10 @@ public class Principal extends JFrame implements ActionListener {
 	JButton btnUpdReparto = new JButton("Modificar");
 	JButton btnSeeReparto = new JButton("Ver");
 
-	String[][] datosActor = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
-			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
-	String[] cabeceraActor = { "Nombre", "Nacionalidad", "Edad" };
-	JTable tablaActor = new JTable(datosActor, cabeceraActor);
-	JScrollPane scrollActor = new JScrollPane(tablaActor);
+	static String[][] datosActor = {};
+
+	public static JTable tablaActor;
+	static JScrollPane scrollActor = new JScrollPane(tablaActor);
 
 	String[][] datosPelicula = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
 			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
@@ -87,6 +90,8 @@ public class Principal extends JFrame implements ActionListener {
 	String[] cabeceraReparto = { "Actor", "papel", "premio" };
 	JTable tablaReparto = new JTable(datosReparto, cabeceraReparto);
 	JScrollPane scrollReparto = new JScrollPane(tablaReparto);
+
+	static ArrayList idsActor = new ArrayList();
 
 	public Principal() throws ParseException {
 		ar = new AnyadirReparto();
@@ -135,22 +140,26 @@ public class Principal extends JFrame implements ActionListener {
 		tablaPelicula.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaReparto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		//Listeners del panel de Actor
+		// Listeners del panel de Actor
 		btnNewActor.addActionListener(this);
 		btnDelActor.addActionListener(this);
 		btnUpdActor.addActionListener(this);
 		btnSeeActor.addActionListener(this);
-		//Listeners del panel de Pelicula
-		
-		//Listeners del panel de Reparto
+		// Listeners del panel de Pelicula
+
+		// Listeners del panel de Reparto
 		btnNewReparto.addActionListener(this);
 		btnDelReparto.addActionListener(this);
 		btnUpdReparto.addActionListener(this);
 		btnSeeReparto.addActionListener(this);
-		
+
 		setSize(500, 300);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		ActualizarTabla();
+		
+		tablaActor.setModel(
+				new DefaultTableModel(new Object[][] {},new String[] { "Nombre", "Nacionalidad", "Edad" }));
 	}
 
 	public static void main(String[] args) throws ParseException {
@@ -159,28 +168,42 @@ public class Principal extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		/*
-		 * if (o.equals(btnNewActor)) { aa.setVisible(true); } if
-		 * (o.equals(btnDelActor)) { ba.setVisible(true); } if(o.equals(btnUpdActor)) {
-		 * ma.setVisible(true); }
-		 */
 
-		/* El código siguente hace lo mismo que las lineas comentadas anteriormente
-		 * Acciones de los botones de Actor
-		 */
-		aa.setVisible(o.equals(btnNewActor));
-		ba.setVisible(o.equals(btnDelActor));
-		ma.setVisible(o.equals(btnUpdActor));
-		va.setVisible(o.equals(btnSeeActor));
+		if (o.equals(btnNewActor)) {
+			aa.setVisible(true);
+			aa.VaciarActor();
+		}
+		if (o.equals(btnDelActor)) {
+			ba.setVisible(true);
+		}
+		if (o.equals(btnUpdActor)) {
+			ma.setVisible(true);
+		}
+		if (o.equals(btnSeeActor)) {
+			va.setVisible(true);
+		}
 
-		//Acciones de los botones de Pelicula
-		
-		//Acciones de los botones de Reparto
+		// Acciones de los botones de Pelicula
+
+		// Acciones de los botones de Reparto
 		ar.setVisible(o.equals(btnNewReparto));
-//		br.setVisible(o.equals(btnDelReparto));
-//		mr.setVisible(o.equals(btnUpdReparto));
-//		vr.setVisible(o.equals(btnSeeReparto));
-//		
+		// br.setVisible(o.equals(btnDelReparto));
+		// mr.setVisible(o.equals(btnUpdReparto));
+		// vr.setVisible(o.equals(btnSeeReparto));
+		
+	}
+
+	public static void ActualizarTabla() {
+		List<Actor> busqueda = ActorDAO.buscarTodos();
+		DefaultTableModel modelo = (DefaultTableModel) Principal.tablaActor.getModel();
+		int filas = Principal.tablaActor.getRowCount();
+		for (int i = 0; filas > i; i++) {
+			modelo.removeRow(0);
+		}
+		for (Actor a : busqueda) {
+			idsActor.add(a.getIdActor());
+			modelo.addRow(new Object[] { a.getNombre(), a.getNacionalidad(), a.getEdad() });
+		}
 	}
 
 }
