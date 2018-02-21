@@ -16,10 +16,10 @@ import javax.swing.ListSelectionModel;
 
 import org.hibernate.Session;
 
-import actores.AnyadirActor;
-import actores.BorrarActor;
-import actores.ModificarActor;
-import actores.VerActor;
+import actor.AnyadirActor;
+import actor.BorrarActor;
+import actor.ModificarActor;
+import actor.VerActor;
 import reparto.AnyadirReparto;
 import reparto.BorrarReparto;
 import reparto.ModificarReparto;

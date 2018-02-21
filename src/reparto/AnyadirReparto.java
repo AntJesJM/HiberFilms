@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import actores.AnyadirActor;
+import actor.AnyadirActor;
 
 public class AnyadirReparto extends JFrame implements ActionListener {
 

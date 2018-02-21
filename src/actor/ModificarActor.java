@@ -1,4 +1,4 @@
-package actores;
+package actor;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
