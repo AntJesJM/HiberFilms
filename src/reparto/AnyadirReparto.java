@@ -5,15 +5,18 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import actor.AnyadirActor;
 
@@ -45,10 +48,12 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
 
-	public AnyadirReparto() {
+	public AnyadirReparto() throws ParseException {
 		setTitle("Añadir Reparto");
 		setSize(300, 200);
 		setResizable(false);
+		MaskFormatter maskPapel = new MaskFormatter("********************");
+		txtPapel= new JFormattedTextField(maskPapel);
 
 		dlgConfirmar.setTitle("Confirmación");
 		panelDatos.setLayout(new GridLayout(4, 2));

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,7 +39,7 @@ public class Principal extends JFrame implements ActionListener {
 	//Tabla Pelicula
 	
 	//Tabla Reparto
-	AnyadirReparto ar = new AnyadirReparto();
+	AnyadirReparto ar;
 	BorrarReparto br = new BorrarReparto();
 	ModificarReparto mr = new ModificarReparto();
 	VerReparto vr = new VerReparto();
@@ -87,7 +88,8 @@ public class Principal extends JFrame implements ActionListener {
 	JTable tablaReparto = new JTable(datosReparto, cabeceraReparto);
 	JScrollPane scrollReparto = new JScrollPane(tablaReparto);
 
-	public Principal() {
+	public Principal() throws ParseException {
+		ar = new AnyadirReparto();
 		setResizable(false);
 		setTitle("HiberFilms");
 		setLayout(new GridLayout(1, 1));
@@ -151,7 +153,7 @@ public class Principal extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		new Principal();
 	}
 
