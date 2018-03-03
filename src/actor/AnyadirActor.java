@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 import antJesJM.hf.Principal;
 import clases.Actor;
@@ -131,7 +130,7 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		id++;
 		Actor actor = new Actor(txtNombre.getText(),txtApellido.getText(),txtNacionalidad.getText(),Integer.parseInt(txtEdad.getText()));
 		ActorDAO.guardar(actor);
-		Principal.ActualizarTabla();
+		Principal.ActualizarTablas();
 		setVisible(false);
 	}
 

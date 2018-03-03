@@ -10,10 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import clases.Pelicula;
+import clasesDAO.PeliculaDAO;
+
 public class VerPelicula extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-
+	int idPelicula;
 	JPanel panelDatos = new JPanel();
 	JPanel panelBotones = new JPanel();
 
@@ -29,7 +32,8 @@ public class VerPelicula extends JFrame implements ActionListener {
 
 	JButton btnCerrar = new JButton("Cerrar");
 
-	public VerPelicula() {
+	public VerPelicula(int id) {
+		idPelicula = id;
 		setTitle("Modificar Actor");
 		setSize(300, 200);
 		setResizable(false);
@@ -48,27 +52,28 @@ public class VerPelicula extends JFrame implements ActionListener {
 		panelDatos.add(txtDirector);
 
 		panelBotones.add(btnCerrar);
-
 		add(panelDatos);
 		add(panelBotones);
 
 		btnCerrar.addActionListener(this);
-
 		setVisible(true);
-
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
-
 	}
 
 	public static void main(String[] args) {
-		new VerPelicula();
+		new VerPelicula(1);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		// Object o = e.getSource();
-
 		setVisible(!e.getSource().equals(btnCerrar));
-
 	}
 
+	public void mostrarInfo(int id) {
+		Pelicula p = PeliculaDAO.buscarPorID(idPelicula);
+		txtTitulo.setText(p.getTitulo());
+		txtAnyo.setText(p.getAnio() + "");
+		txtGenero.setText(p.getGenero());
+		txtDirector.setText(p.getDirector());
+	}
 }

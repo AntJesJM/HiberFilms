@@ -25,7 +25,13 @@ import actor.BorrarActor;
 import actor.ModificarActor;
 import actor.VerActor;
 import clases.Actor;
+import clases.Pelicula;
+import clases.Reparto;
 import clasesDAO.ActorDAO;
+import clasesDAO.PeliculaDAO;
+import clasesDAO.RepartoDAO;
+import pelicula.AnyadirPelicula;
+import pelicula.BorrarPelicula;
 import reparto.AnyadirReparto;
 import reparto.BorrarReparto;
 import reparto.ModificarReparto;
@@ -37,23 +43,26 @@ public class Principal extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	public static Session session = HibernateUtil.getSession();
 	// Tabla Actor
-	AnyadirActor aa = new AnyadirActor();
-	BorrarActor ba = new BorrarActor();
-	ModificarActor ma = new ModificarActor();
-	VerActor va = new VerActor();
-	// Tabla Pelicula
+	AnyadirActor addActor = new AnyadirActor();
+	BorrarActor delActor = new BorrarActor();
+	ModificarActor modActor = new ModificarActor();
+	VerActor verActor = new VerActor();
 
 	// Tabla Reparto
-	AnyadirReparto ar;
-	BorrarReparto br = new BorrarReparto();
-	ModificarReparto mr = new ModificarReparto();
-	VerReparto vr = new VerReparto();
-
+	AnyadirReparto addReparto;
+	BorrarReparto delReparto = new BorrarReparto();
+	ModificarReparto modReparto = new ModificarReparto();
+	VerReparto verReparto = new VerReparto();
+	
+	// Tabla Pelicula
+	AnyadirPelicula addPel = new AnyadirPelicula();
+	BorrarPelicula delPel = new BorrarPelicula();
+	
 	JTabbedPane pestañas = new JTabbedPane();
 
-	JPanel actores = new JPanel(new BorderLayout());
-	JPanel peliculas = new JPanel(new BorderLayout());
-	JPanel reparto = new JPanel(new BorderLayout());
+	JPanel pnlActores = new JPanel(new BorderLayout());
+	JPanel pnlPelicula = new JPanel(new BorderLayout());
+	JPanel pnlReparto = new JPanel(new BorderLayout());
 
 	JPanel pnlBtnActores = new JPanel(new GridLayout(1, 4));
 	JPanel pnlBtnPeliculas = new JPanel(new GridLayout(1, 4));
@@ -74,27 +83,21 @@ public class Principal extends JFrame implements ActionListener {
 	JButton btnUpdReparto = new JButton("Modificar");
 	JButton btnSeeReparto = new JButton("Ver");
 
-	static String[][] datosActor = {};
+	static ArrayList arrIdActor = new ArrayList();
+	static ArrayList arrIdPelicula = new ArrayList();
+	static ArrayList arrIdReparto = new ArrayList();
 
-	public static JTable tablaActor;
+	public static JTable tablaActor = new JTable();
 	static JScrollPane scrollActor = new JScrollPane(tablaActor);
 
-	String[][] datosPelicula = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
-			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
-	String[] cabeceraPelicula = { "Titulo", "Año", "Género" };
-	JTable tablaPelicula = new JTable(datosPelicula, cabeceraPelicula);
+	public static JTable tablaPelicula = new JTable();
 	JScrollPane scrollPelicula = new JScrollPane(tablaPelicula);
 
-	String[][] datosReparto = { { "1", "a", "b" }, { "3", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" },
-			{ "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" }, { "2", "a", "b" } };
-	String[] cabeceraReparto = { "Actor", "papel", "premio" };
-	JTable tablaReparto = new JTable(datosReparto, cabeceraReparto);
+	public static JTable tablaReparto = new JTable();
 	JScrollPane scrollReparto = new JScrollPane(tablaReparto);
 
-	static ArrayList idsActor = new ArrayList();
-
 	public Principal() throws ParseException {
-		ar = new AnyadirReparto();
+		addReparto = new AnyadirReparto();
 		setResizable(false);
 		setTitle("HiberFilms");
 		setLayout(new GridLayout(1, 1));
@@ -102,30 +105,30 @@ public class Principal extends JFrame implements ActionListener {
 		scrollPelicula.setPreferredSize(new Dimension(400, 100));
 		scrollReparto.setPreferredSize(new Dimension(400, 100));
 
-		actores.add("Center", scrollActor);
+		pnlActores.add("Center", scrollActor);
 		pnlBtnActores.add(btnNewActor);
 		pnlBtnActores.add(btnDelActor);
 		pnlBtnActores.add(btnUpdActor);
 		pnlBtnActores.add(btnSeeActor);
-		actores.add("South", pnlBtnActores);
+		pnlActores.add("South", pnlBtnActores);
 
-		peliculas.add("Center", scrollPelicula);
+		pnlPelicula.add("Center", scrollPelicula);
 		pnlBtnPeliculas.add(btnNewPelicula);
 		pnlBtnPeliculas.add(btnDelPelicula);
 		pnlBtnPeliculas.add(btnUpdPelicula);
 		pnlBtnPeliculas.add(btnSeePelicula);
-		peliculas.add("South", pnlBtnPeliculas);
+		pnlPelicula.add("South", pnlBtnPeliculas);
 
-		reparto.add("Center", scrollReparto);
+		pnlReparto.add("Center", scrollReparto);
 		pnlBtnReparto.add(btnNewReparto);
 		pnlBtnReparto.add(btnDelReparto);
 		pnlBtnReparto.add(btnUpdReparto);
 		pnlBtnReparto.add(btnSeeReparto);
-		reparto.add("South", pnlBtnReparto);
+		pnlReparto.add("South", pnlBtnReparto);
 
-		pestañas.addTab("actores", actores);
-		pestañas.addTab("películas", peliculas);
-		pestañas.addTab("reparto", reparto);
+		pestañas.addTab("actores", pnlActores);
+		pestañas.addTab("películas", pnlPelicula);
+		pestañas.addTab("reparto", pnlReparto);
 		add(pestañas);
 
 		tablaActor.setDefaultEditor(Object.class, null);
@@ -140,6 +143,9 @@ public class Principal extends JFrame implements ActionListener {
 		tablaPelicula.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaReparto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+		tablaActor.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Nacionalidad", "Edad" }));
+tablaPelicula.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Año", "Género" }));
+tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Actor", "Pelicula", "Papel" }));
 		// Listeners del panel de Actor
 		btnNewActor.addActionListener(this);
 		btnDelActor.addActionListener(this);
@@ -156,10 +162,7 @@ public class Principal extends JFrame implements ActionListener {
 		setSize(500, 300);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		ActualizarTabla();
-		
-		tablaActor.setModel(
-				new DefaultTableModel(new Object[][] {},new String[] { "Nombre", "Nacionalidad", "Edad" }));
+		ActualizarTablas();
 	}
 
 	public static void main(String[] args) throws ParseException {
@@ -170,39 +173,67 @@ public class Principal extends JFrame implements ActionListener {
 		Object o = e.getSource();
 
 		if (o.equals(btnNewActor)) {
-			aa.setVisible(true);
-			aa.VaciarActor();
+			addActor.setVisible(true);
+			addActor.VaciarActor();
 		}
 		if (o.equals(btnDelActor)) {
-			ba.setVisible(true);
+			delActor.setVisible(true);
 		}
 		if (o.equals(btnUpdActor)) {
-			ma.setVisible(true);
+			modActor.setVisible(true);
 		}
 		if (o.equals(btnSeeActor)) {
-			va.setVisible(true);
+			verActor.setVisible(true);
 		}
 
 		// Acciones de los botones de Pelicula
 
 		// Acciones de los botones de Reparto
-		ar.setVisible(o.equals(btnNewReparto));
+		addReparto.setVisible(o.equals(btnNewReparto));
 		// br.setVisible(o.equals(btnDelReparto));
 		// mr.setVisible(o.equals(btnUpdReparto));
 		// vr.setVisible(o.equals(btnSeeReparto));
 		
 	}
 
-	public static void ActualizarTabla() {
-		List<Actor> busqueda = ActorDAO.buscarTodos();
-		DefaultTableModel modelo = (DefaultTableModel) Principal.tablaActor.getModel();
-		int filas = Principal.tablaActor.getRowCount();
-		for (int i = 0; filas > i; i++) {
-			modelo.removeRow(0);
+	@SuppressWarnings("unchecked")
+	public static void ActualizarTablas() {
+		// Resteo arrays ids
+		arrIdActor.clear();
+		arrIdPelicula.clear();
+		arrIdReparto.clear();
+
+		// Tabla actor
+		List<Actor> buscActor = ActorDAO.buscarTodos();
+		DefaultTableModel modActor = (DefaultTableModel) Principal.tablaActor.getModel();
+		int contador = Principal.tablaActor.getRowCount();
+		for (int i = 0; contador > i; i++) {
+			modActor.removeRow(0);
 		}
-		for (Actor a : busqueda) {
-			idsActor.add(a.getIdActor());
-			modelo.addRow(new Object[] { a.getNombre(), a.getNacionalidad(), a.getEdad() });
+		for (Actor act : buscActor) {
+			arrIdActor.add(act.getIdActor());
+			modActor.addRow(new Object[] { act.getNombre(), act.getNacionalidad(), act.getEdad() });
+		}
+		// Tabla pelicula
+		List<Pelicula> buscPelicula = PeliculaDAO.buscarTodos();
+		DefaultTableModel modPelicula = (DefaultTableModel) Principal.tablaPelicula.getModel();
+		int contador2 = Principal.tablaPelicula.getRowCount();
+		for (int i = 0; contador2 > i; i++)
+			modPelicula.removeRow(0);
+		for (Pelicula pel : buscPelicula) {
+			arrIdPelicula.add(pel.getIdPelicula());
+			modPelicula.addRow(new Object[] { pel.getTitulo(), pel.getAnio(), pel.getGenero() });
+		}
+		// Tabla Reparto
+		List<Reparto> buscReparto = RepartoDAO.buscarTodos();
+		DefaultTableModel modReparto = (DefaultTableModel) Principal.tablaReparto.getModel();
+		int contador3 = Principal.tablaReparto.getRowCount();
+		for (int i = 0; contador3 > i; i++)
+			modReparto.removeRow(0);
+		for (Reparto rep : buscReparto) {
+			arrIdReparto.add(rep.getIdReparto());
+			modReparto.addRow(new Object[] { rep.getActor().getNombre(),rep.getPelicula().getTitulo(),rep.getPapel() });
+
 		}
 	}
 

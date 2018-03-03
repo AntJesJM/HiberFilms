@@ -17,10 +17,11 @@ public class Pelicula implements Serializable {
 	public Pelicula() {
 	}
 
-	public Pelicula(String titulo, int anio, String genero) {
+	public Pelicula(String titulo, int anio, String genero, String director) {
 		this.titulo = titulo;
 		this.anio = anio;
 		this.genero = genero;
+		this.director=director;
 	}
 	
 	public Pelicula(String titulo, int anio, String genero, Set<Reparto> reparto) {

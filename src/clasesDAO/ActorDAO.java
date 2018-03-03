@@ -2,8 +2,6 @@ package clasesDAO;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
 import antJesJM.hf.Principal;
 import clases.Actor;
 
@@ -41,10 +39,8 @@ public class ActorDAO {
 	
 	public static List<Actor> buscarTodos() {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Actor> query = Principal.session.createQuery("FROM Actor");
-		//Query consulta = Principal.session.createQuery()
-	    List<Actor> result = query.getResultList();
-		return result;
+		List<Actor> actor = (List<Actor>) Principal.session.createQuery("FROM Actor").list();
+		return actor;
 		}
 
 }

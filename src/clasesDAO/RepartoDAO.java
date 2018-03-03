@@ -2,8 +2,6 @@ package clasesDAO;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
 import antJesJM.hf.Principal;
 import clases.Reparto;
 
@@ -41,8 +39,7 @@ public class RepartoDAO {
 
 	public static List<Reparto> buscarTodos() {
 		@SuppressWarnings("unchecked")
-		TypedQuery<Reparto> query = (TypedQuery<Reparto>) Principal.session.createQuery("FROM Reparto");
-		List<Reparto> result = query.getResultList();
-		return result;
+		List<Reparto> reparto = (List<Reparto>) Principal.session.createQuery("FROM Reparto").list();
+		return reparto;
 	}
 }

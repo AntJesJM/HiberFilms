@@ -5,22 +5,30 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import javax.transaction.Transactional.TxType;
+
+import antJesJM.hf.Principal;
+import clases.Pelicula;
+import clasesDAO.PeliculaDAO;
 
 public class ModificarPelicula extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-
-	JDialog dlgconfirmar = new JDialog();
-	JLabel lblconf = new JLabel("¿Está seguro de que quiere modificar?");
-	JButton btnconfirm = new JButton("Aceptar");
-	JButton btncanc = new JButton("Cancelar");
+	int idPelicula;
+	JDialog dlgConfirmar = new JDialog();
+	JLabel lblConfirm = new JLabel("¿Está seguro de que quiere modificar?");
+	JButton btnAceptar = new JButton("Aceptar");
+	JButton btnCancelar = new JButton("Cancelar");
 
 	JPanel panelDatos = new JPanel();
 	JPanel panelBotones = new JPanel();
@@ -31,14 +39,15 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 	JLabel lblDirector = new JLabel("Director");
 
 	JFormattedTextField txtTitulo;
-	JFormattedTextField txtAnio;
+	JFormattedTextField txtAnyo;
 	JFormattedTextField txtGenero;
 	JFormattedTextField txtDirector;
 
 	JButton btnConfirm = new JButton("Confirmar");
-	JButton btnCancelar = new JButton("Cancelar");
+	JButton btnCancel = new JButton("Cancelar");
 
-	public ModificarPelicula() {
+	public ModificarPelicula(int id) {
+		idPelicula=id;
 		setTitle("Modificar Película");
 		setSize(300, 200);
 		setResizable(false);
@@ -57,12 +66,12 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 
-		txtAnio = new JFormattedTextField(maskAnio);
+		txtAnyo = new JFormattedTextField(maskAnio);
 		txtTitulo = new JFormattedTextField(maskTitle);
 		txtGenero = new JFormattedTextField(maskGen);
 		txtDirector = new JFormattedTextField(maskDir);
 
-		dlgconfirmar.setTitle("Confirmación");
+		dlgConfirmar.setTitle("Confirmación");
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
@@ -70,30 +79,30 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		panelDatos.add(lblTitulo);
 		panelDatos.add(txtTitulo);
 		panelDatos.add(lblAnyo);
-		panelDatos.add(txtAnio);
+		panelDatos.add(txtAnyo);
 		panelDatos.add(lblGenero);
 		panelDatos.add(txtGenero);
 		panelDatos.add(lblDirector);
 		panelDatos.add(txtDirector);
 
 		panelBotones.add(btnConfirm);
-		panelBotones.add(btnCancelar);
+		panelBotones.add(btnCancel);
 
 		add(panelDatos);
 		add(panelBotones);
 
 		btnConfirm.addActionListener(this);
+		btnCancel.addActionListener(this);
+
+		btnAceptar.addActionListener(this);
 		btnCancelar.addActionListener(this);
 
-		btnconfirm.addActionListener(this);
-		btncanc.addActionListener(this);
-
-		dlgconfirmar.setLayout(new FlowLayout());
-		dlgconfirmar.add(lblconf);
-		dlgconfirmar.add(btnconfirm);
-		dlgconfirmar.add(btncanc);
-		dlgconfirmar.setSize(250, 150);
-		dlgconfirmar.setVisible(false);
+		dlgConfirmar.setLayout(new FlowLayout());
+		dlgConfirmar.add(lblConfirm);
+		dlgConfirmar.add(btnAceptar);
+		dlgConfirmar.add(btnCancelar);
+		dlgConfirmar.setSize(250, 150);
+		dlgConfirmar.setVisible(false);
 
 		setVisible(true);
 
@@ -102,25 +111,64 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new ModificarPelicula();
+		new ModificarPelicula(1);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
-		if (o.equals(btnCancelar)) {
+		if (o.equals(btnCancel)) {
 			setVisible(false);
 		} else if (o.equals(btnConfirm)) {
-			dlgconfirmar.setVisible(true);
+			dlgConfirmar.setVisible(true);
 
 		}
-		if (o.equals(btnconfirm)) {
-			dlgconfirmar.setVisible(false);
+		if (o.equals(btnAceptar)) {
+			dlgConfirmar.setVisible(false);
 			setVisible(false);
-		} else if (o.equals(btncanc)) {
-			dlgconfirmar.setVisible(false);
+			if(txtTitulo.getText().isEmpty()||txtAnyo.getText().isEmpty()||txtGenero.getText().isEmpty()||txtDirector.getText().isEmpty())
+				JOptionPane.showMessageDialog(getContentPane(), "Faltan datos por introducir", "Error", JOptionPane.ERROR_MESSAGE);
+			else
+			{guardarPelicula();}
+		} else if (o.equals(btnCancelar)) {
+			dlgConfirmar.setVisible(false);
 		}
+	}
 
+	public void guardarPelicula(){
+		Pelicula p=PeliculaDAO.buscarPorID(idPelicula);
+		p.setTitulo((txtTitulo.getText()));
+		p.setAnio(Integer.parseInt(txtAnyo.getText()));
+		p.setGenero(txtGenero.getText());
+		p.setDirector(txtDirector.getText());
+		PeliculaDAO.modificar(p);
+		ActualizarTabla();
+		setVisible(false);
+	}
+	
+	public void ActualizarTabla(){
+		List<Pelicula> buscTod = PeliculaDAO.buscarTodos();
+//		DefaultTableModel modelo=(DefaultTableModel) Principal.tablaPelicula.getModel();
+//		int filas=Principal.tablaPelicula.getRowCount();
+//		for (int i=0;filas>i;i++)
+//			 modelo.removeRow(0);
+//		List<Pelicula> busqueda2 = PeliculaDAO.buscarTodos();
+//
+//		for (Pelicula p : busqueda2)
+//		{
+//			modelo.addRow(new Object[]{p.getIdPelicula(),p.getTitulo(),p.getAnio()});
+//		
+//		}
+	
+	}
+	public void CargarDatos(int id)
+	{
+		Pelicula p = PeliculaDAO.buscarPorID(idPelicula);
+		txtTitulo.setText(p.getTitulo());
+		txtAnyo.setText(p.getAnio() + "");
+		txtGenero.setText(p.getGenero());
+		txtDirector.setText(p.getDirector());
+		
 	}
 
 }
