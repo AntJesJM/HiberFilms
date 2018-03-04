@@ -101,6 +101,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		btnCancelar.addActionListener(this);
 
 		dlgConfirmar.setLayout(new FlowLayout());
+		dlgConfirmar.setLocationRelativeTo(null);
 		dlgConfirmar.add(lblConfirm);
 		dlgConfirmar.add(btnAceptar);
 		dlgConfirmar.add(btnCancelar);

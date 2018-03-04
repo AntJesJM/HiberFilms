@@ -227,7 +227,14 @@ public class Principal extends JFrame implements ActionListener {
 			}
 		}
 		if (o.equals(btnSeePelicula)) {
-
+			if (tablaPelicula.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idPelicula = (Integer) arrIdPelicula.get(tablaPelicula.getSelectedRow());
+				verPel.cargarDatos(idPelicula);
+				verPel.setVisible(true);
+			}
 		}
 		
 		// Acciones de los botones de Reparto
