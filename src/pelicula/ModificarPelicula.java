@@ -24,7 +24,8 @@ import clasesDAO.PeliculaDAO;
 
 public class ModificarPelicula extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	int idPelicula;
+
+	String[] datos = new String[4];
 	JDialog dlgConfirmar = new JDialog();
 	JLabel lblConfirm = new JLabel("¿Está seguro de que quiere modificar?");
 	JButton btnAceptar = new JButton("Aceptar");
@@ -39,25 +40,28 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 	JLabel lblDirector = new JLabel("Director");
 
 	JFormattedTextField txtTitulo;
-	JFormattedTextField txtAnyo;
+	JFormattedTextField txtAnio;
 	JFormattedTextField txtGenero;
 	JFormattedTextField txtDirector;
 
 	JButton btnConfirm = new JButton("Confirmar");
 	JButton btnCancel = new JButton("Cancelar");
+	Pelicula peli;
 
 	public ModificarPelicula() {
 		setTitle("Modificar Película");
 		setSize(300, 200);
 		setResizable(false);
+		setVisible(false);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		MaskFormatter maskAnio = null;
 		MaskFormatter maskTitle = null;
 		MaskFormatter maskGen = null;
 		MaskFormatter maskDir = null;
 		try {
 			maskAnio = new MaskFormatter("####");
-			maskTitle = new MaskFormatter(
-					"**********************************************************************");
+			maskTitle = new MaskFormatter("**********************************************************************");
 			maskGen = new MaskFormatter("********************");
 			maskDir = new MaskFormatter("******************************");
 		} catch (ParseException e) {
@@ -65,7 +69,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 
-		txtAnyo = new JFormattedTextField(maskAnio);
+		txtAnio = new JFormattedTextField(maskAnio);
 		txtTitulo = new JFormattedTextField(maskTitle);
 		txtGenero = new JFormattedTextField(maskGen);
 		txtDirector = new JFormattedTextField(maskDir);
@@ -78,7 +82,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		panelDatos.add(lblTitulo);
 		panelDatos.add(txtTitulo);
 		panelDatos.add(lblAnyo);
-		panelDatos.add(txtAnyo);
+		panelDatos.add(txtAnio);
 		panelDatos.add(lblGenero);
 		panelDatos.add(txtGenero);
 		panelDatos.add(lblDirector);
@@ -102,11 +106,6 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		dlgConfirmar.add(btnCancelar);
 		dlgConfirmar.setSize(250, 150);
 		dlgConfirmar.setVisible(false);
-
-		setVisible(false);
-
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
-
 	}
 
 	public static void main(String[] args) {
@@ -124,50 +123,39 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		}
 		if (o.equals(btnAceptar)) {
 			dlgConfirmar.setVisible(false);
-			setVisible(false);
-			if(txtTitulo.getText().isEmpty()||txtAnyo.getText().isEmpty()||txtGenero.getText().isEmpty()||txtDirector.getText().isEmpty())
-				JOptionPane.showMessageDialog(getContentPane(), "Faltan datos por introducir", "Error", JOptionPane.ERROR_MESSAGE);
-			else
-			{guardarPelicula();}
-		} else if (o.equals(btnCancelar)) {
+			if (txtTitulo.getText().trim().isEmpty() || txtAnio.getText().trim().isEmpty()
+					|| txtGenero.getText().trim().isEmpty() || txtDirector.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar todos los campos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (Integer.parseInt(txtAnio.getText().trim()) < 1895) {
+				JOptionPane.showMessageDialog(getContentPane(), "La primera película data de 1895", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				actualizarPelicula();
+				setVisible(false);
+			}
+		}
+		if (o.equals(btnCancelar)) {
 			dlgConfirmar.setVisible(false);
 		}
 	}
 
-	public void guardarPelicula(){
-		Pelicula p=PeliculaDAO.buscarPorID(idPelicula);
-		p.setTitulo((txtTitulo.getText()));
-		p.setAnio(Integer.parseInt(txtAnyo.getText()));
-		p.setGenero(txtGenero.getText());
-		p.setDirector(txtDirector.getText());
-		PeliculaDAO.modificar(p);
-		ActualizarTabla();
+	public void actualizarPelicula() {
+		peli = PeliculaDAO.buscarPorID(Principal.idPelicula);
+		peli.setTitulo(txtTitulo.getText().trim());
+		peli.setAnio(Integer.parseInt(txtAnio.getText().trim()));
+		peli.setGenero(txtGenero.getText().trim());
+		peli.setDirector(txtDirector.getText().trim());
+		PeliculaDAO.modificar(peli);
+		Principal.ActualizarTablas();
 		setVisible(false);
 	}
-	
-	public void ActualizarTabla(){
-		List<Pelicula> buscTod = PeliculaDAO.buscarTodos();
-//		DefaultTableModel modelo=(DefaultTableModel) Principal.tablaPelicula.getModel();
-//		int filas=Principal.tablaPelicula.getRowCount();
-//		for (int i=0;filas>i;i++)
-//			 modelo.removeRow(0);
-//		List<Pelicula> busqueda2 = PeliculaDAO.buscarTodos();
-//
-//		for (Pelicula p : busqueda2)
-//		{
-//			modelo.addRow(new Object[]{p.getIdPelicula(),p.getTitulo(),p.getAnio()});
-//		
-//		}
-	
-	}
-	public void CargarDatos(int id)
-	{
-		Pelicula p = PeliculaDAO.buscarPorID(idPelicula);
-		txtTitulo.setText(p.getTitulo());
-		txtAnyo.setText(p.getAnio() + "");
-		txtGenero.setText(p.getGenero());
-		txtDirector.setText(p.getDirector());
-		
-	}
 
+	public void cargarDatos(int id) {
+		Pelicula p = PeliculaDAO.buscarPorID(Principal.idPelicula);
+		txtTitulo.setValue(p.getTitulo());
+		txtAnio.setValue(p.getAnio() + "");
+		txtGenero.setValue(p.getGenero());
+		txtDirector.setValue(p.getDirector());
+	}
 }

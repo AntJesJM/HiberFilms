@@ -63,7 +63,10 @@ public class Principal extends JFrame implements ActionListener {
 	BorrarPelicula delPel = new BorrarPelicula();
 	ModificarPelicula modPel = new ModificarPelicula();
 	VerPelicula verPel = new VerPelicula();
-	static int idPelicula, idActor, idReparto;
+	
+	public static int idPelicula;
+	static int idActor;
+	static int idReparto;
 
 	JTabbedPane pestañas = new JTabbedPane();
 
@@ -213,10 +216,17 @@ public class Principal extends JFrame implements ActionListener {
 				delPel.setVisible(true);
 			}
 		}
-		if (o.equals(btnUpdActor)) {
-
+		if (o.equals(btnUpdPelicula)) {
+			if (tablaPelicula.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idPelicula = (Integer) arrIdPelicula.get(tablaPelicula.getSelectedRow());
+				modPel.cargarDatos(idPelicula);
+				modPel.setVisible(true);
+			}
 		}
-		if (o.equals(btnSeeActor)) {
+		if (o.equals(btnSeePelicula)) {
 
 		}
 		
