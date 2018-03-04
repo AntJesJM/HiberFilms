@@ -32,8 +32,8 @@ public class VerPelicula extends JFrame implements ActionListener {
 
 	JButton btnCerrar = new JButton("Cerrar");
 
-	public VerPelicula(int id) {
-		idPelicula = id;
+	public VerPelicula() {
+
 		setTitle("Modificar Actor");
 		setSize(300, 200);
 		setResizable(false);
@@ -56,12 +56,12 @@ public class VerPelicula extends JFrame implements ActionListener {
 		add(panelBotones);
 
 		btnCerrar.addActionListener(this);
-		setVisible(true);
+		setVisible(false);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 
 	public static void main(String[] args) {
-		new VerPelicula(1);
+		new VerPelicula();
 	}
 
 	public void actionPerformed(ActionEvent e) {

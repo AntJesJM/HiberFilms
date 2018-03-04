@@ -29,8 +29,8 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 	JButton btnAceptar = new JButton("Aceptar");
 	JButton btnCancelar = new JButton("Cancelar");
 
-	JPanel panelDatos = new JPanel();
-	JPanel panelBotones = new JPanel();
+	JPanel panelDatos = new JPanel(new GridLayout(4, 2));
+	JPanel panelBotones = new JPanel(new FlowLayout());
 
 	JLabel lblTitulo = new JLabel("Título ");
 	JLabel lblAnyo = new JLabel("Año");
@@ -67,11 +67,10 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 		setTitle("Añadir Película");
 		setSize(300, 200);
 		setResizable(false);
-
-		dlgConfirmar.setTitle("Confirmación");
-		panelDatos.setLayout(new GridLayout(4, 2));
-		panelBotones.setLayout(new FlowLayout());
+		setLocationRelativeTo(null);
 		setLayout(new GridLayout(2, 1));
+		setVisible(false);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
 
 		panelDatos.add(lblTitulo);
 		panelDatos.add(txtTitulo);
@@ -81,7 +80,6 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 		panelDatos.add(txtGenero);
 		panelDatos.add(lblDirector);
 		panelDatos.add(txtDirector);
-
 		panelBotones.add(btnGrabar);
 		panelBotones.add(btnCancel);
 
@@ -90,20 +88,17 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 
 		btnGrabar.addActionListener(this);
 		btnCancel.addActionListener(this);
-
 		btnAceptar.addActionListener(this);
 		btnCancelar.addActionListener(this);
 
+		dlgConfirmar.setTitle("Confirmación");
 		dlgConfirmar.setLayout(new FlowLayout());
+		dlgConfirmar.setLocationRelativeTo(null);
 		dlgConfirmar.add(lblConfirm);
 		dlgConfirmar.add(btnAceptar);
 		dlgConfirmar.add(btnCancelar);
 		dlgConfirmar.setSize(250, 150);
 		dlgConfirmar.setVisible(false);
-
-		setVisible(false);
-
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
 
 	}
 
@@ -122,34 +117,37 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 		}
 		if (o.equals(btnAceptar)) {
 			dlgConfirmar.setVisible(false);
-			setVisible(false);
-			if (txtTitulo.getText().isEmpty() || txtAnio.getText().isEmpty() || txtGenero.getText().isEmpty()
-					|| txtDirector.getText().isEmpty())
-				JOptionPane.showMessageDialog(getContentPane(), "Rellene los campos vacíos", "Error",
+			if (txtTitulo.getText().trim().isEmpty() || txtAnio.getText().trim().isEmpty()
+					|| txtGenero.getText().trim().isEmpty() || txtDirector.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar todos los campos", "Error",
 						JOptionPane.ERROR_MESSAGE);
-
-			else {
-				CrearMecanico();
+			} else if (Integer.parseInt(txtAnio.getText().trim()) < 1895) {
+				JOptionPane.showMessageDialog(getContentPane(), "La primera película data de 1895", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				CrearPelicula();
+				setVisible(false);
 			}
-
-		} else if (o.equals(btnCancelar)) {
+		}
+		if (o.equals(btnCancelar)) {
 			dlgConfirmar.setVisible(false);
 		}
 
 	}
 
-	public void CrearMecanico() {
+	public void CrearPelicula() {
 		List<Pelicula> buscTod = PeliculaDAO.buscarTodos();
-		int id = 0;
+		int posicion = 0;
 		for (Pelicula p : buscTod) {
-			if (p.getIdPelicula() > id)
-				id = p.getIdPelicula();
+			if (p.getIdPelicula() > posicion)
+				posicion = p.getIdPelicula();
 
 		}
-		id++;
-		Pelicula peli = new Pelicula(txtTitulo.getText(),Integer.parseInt(txtAnio.getText()), txtGenero.getText(),txtDirector.getText());
+		posicion++;
+		Pelicula peli = new Pelicula(txtTitulo.getText().trim(), Integer.parseInt(txtAnio.getText().trim()),
+				txtGenero.getText().trim(), txtDirector.getText().trim());
 		PeliculaDAO.guardar(peli);
-//		Principal.ActualizarTablas();
+		Principal.ActualizarTablas();
 		setVisible(false);
 	}
 

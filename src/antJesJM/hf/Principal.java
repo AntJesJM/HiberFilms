@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -32,6 +33,8 @@ import clasesDAO.PeliculaDAO;
 import clasesDAO.RepartoDAO;
 import pelicula.AnyadirPelicula;
 import pelicula.BorrarPelicula;
+import pelicula.ModificarPelicula;
+import pelicula.VerPelicula;
 import reparto.AnyadirReparto;
 import reparto.BorrarReparto;
 import reparto.ModificarReparto;
@@ -42,6 +45,7 @@ public class Principal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	public static Session session = HibernateUtil.getSession();
+	int unselected = -1;
 	// Tabla Actor
 	AnyadirActor addActor = new AnyadirActor();
 	BorrarActor delActor = new BorrarActor();
@@ -53,11 +57,14 @@ public class Principal extends JFrame implements ActionListener {
 	BorrarReparto delReparto = new BorrarReparto();
 	ModificarReparto modReparto = new ModificarReparto();
 	VerReparto verReparto = new VerReparto();
-	
+
 	// Tabla Pelicula
 	AnyadirPelicula addPel = new AnyadirPelicula();
 	BorrarPelicula delPel = new BorrarPelicula();
-	
+	ModificarPelicula modPel = new ModificarPelicula();
+	VerPelicula verPel = new VerPelicula();
+	static int idPelicula, idActor, idReparto;
+
 	JTabbedPane pestañas = new JTabbedPane();
 
 	JPanel pnlActores = new JPanel(new BorderLayout());
@@ -101,6 +108,7 @@ public class Principal extends JFrame implements ActionListener {
 		setResizable(false);
 		setTitle("HiberFilms");
 		setLayout(new GridLayout(1, 1));
+		setLocationRelativeTo(null);
 		scrollActor.setPreferredSize(new Dimension(400, 100));
 		scrollPelicula.setPreferredSize(new Dimension(400, 100));
 		scrollReparto.setPreferredSize(new Dimension(400, 100));
@@ -143,16 +151,21 @@ public class Principal extends JFrame implements ActionListener {
 		tablaPelicula.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaReparto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		tablaActor.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Nacionalidad", "Edad" }));
-tablaPelicula.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Año", "Género" }));
-tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Actor", "Pelicula", "Papel" }));
+		tablaActor
+				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Nacionalidad", "Edad" }));
+		tablaPelicula.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Año", "Género" }));
+		tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Actor", "Pelicula", "Papel" }));
+		
 		// Listeners del panel de Actor
 		btnNewActor.addActionListener(this);
 		btnDelActor.addActionListener(this);
 		btnUpdActor.addActionListener(this);
 		btnSeeActor.addActionListener(this);
 		// Listeners del panel de Pelicula
-
+		btnNewPelicula.addActionListener(this);
+		btnDelPelicula.addActionListener(this);
+		btnUpdPelicula.addActionListener(this);
+		btnSeePelicula.addActionListener(this);
 		// Listeners del panel de Reparto
 		btnNewReparto.addActionListener(this);
 		btnDelReparto.addActionListener(this);
@@ -187,13 +200,32 @@ tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "A
 		}
 
 		// Acciones de los botones de Pelicula
+		if (o.equals(btnNewPelicula)) {
+			addPel.setVisible(true);
+		}
+		if (o.equals(btnDelPelicula)) {
+			if (tablaPelicula.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idPelicula = (Integer) arrIdPelicula.get(tablaPelicula.getSelectedRow());
+				delPel.cargarDatos(idPelicula);
+				delPel.setVisible(true);
+			}
+		}
+		if (o.equals(btnUpdActor)) {
 
+		}
+		if (o.equals(btnSeeActor)) {
+
+		}
+		
 		// Acciones de los botones de Reparto
-		addReparto.setVisible(o.equals(btnNewReparto));
+		//addReparto.setVisible(o.equals(btnNewReparto));
 		// br.setVisible(o.equals(btnDelReparto));
 		// mr.setVisible(o.equals(btnUpdReparto));
 		// vr.setVisible(o.equals(btnSeeReparto));
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -232,7 +264,8 @@ tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "A
 			modReparto.removeRow(0);
 		for (Reparto rep : buscReparto) {
 			arrIdReparto.add(rep.getIdReparto());
-			modReparto.addRow(new Object[] { rep.getActor().getNombre(),rep.getPelicula().getTitulo(),rep.getPapel() });
+			modReparto
+					.addRow(new Object[] { rep.getActor().getNombre(), rep.getPelicula().getTitulo(), rep.getPapel() });
 
 		}
 	}

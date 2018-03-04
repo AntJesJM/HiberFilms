@@ -46,8 +46,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 	JButton btnConfirm = new JButton("Confirmar");
 	JButton btnCancel = new JButton("Cancelar");
 
-	public ModificarPelicula(int id) {
-		idPelicula=id;
+	public ModificarPelicula() {
 		setTitle("Modificar Película");
 		setSize(300, 200);
 		setResizable(false);
@@ -104,14 +103,14 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		dlgConfirmar.setSize(250, 150);
 		dlgConfirmar.setVisible(false);
 
-		setVisible(true);
+		setVisible(false);
 
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 
 	}
 
 	public static void main(String[] args) {
-		new ModificarPelicula(1);
+		new ModificarPelicula();
 	}
 
 	public void actionPerformed(ActionEvent e) {
