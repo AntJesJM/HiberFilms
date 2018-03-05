@@ -137,9 +137,9 @@ public class Principal extends JFrame implements ActionListener {
 		pnlBtnReparto.add(btnSeeReparto);
 		pnlReparto.add("South", pnlBtnReparto);
 
-		pestañas.addTab("actores", pnlActores);
-		pestañas.addTab("películas", pnlPelicula);
-		pestañas.addTab("reparto", pnlReparto);
+		pestañas.addTab("Actores", pnlActores);
+		pestañas.addTab("Películas", pnlPelicula);
+		pestañas.addTab("Reparto", pnlReparto);
 		add(pestañas);
 
 		tablaActor.setDefaultEditor(Object.class, null);
@@ -156,8 +156,8 @@ public class Principal extends JFrame implements ActionListener {
 
 		tablaActor
 				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Nacionalidad", "Edad" }));
-		tablaPelicula.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Año", "Género" }));
-		tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Actor", "Pelicula", "Papel" }));
+		tablaPelicula.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Título", "Año", "Género" }));
+		tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Actor", "Película", "Papel" }));
 		
 		// Listeners del panel de Actor
 		btnNewActor.addActionListener(this);
@@ -256,16 +256,11 @@ public class Principal extends JFrame implements ActionListener {
 				verPel.setVisible(true);
 			}
 		}
-		if (o.equals(btnSeeReparto)) {
-			if (tablaReparto.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
-				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
-				verReparto.cargarDatos(idReparto);
-				verReparto.setVisible(true);
-			}
-		} 
+		
+		// Acciones de los botones de Reparto
+		if (o.equals(btnNewReparto)) {
+			addReparto.setVisible(true);
+		}
 		if (o.equals(btnDelReparto)) {
 			if (tablaReparto.getSelectedRow() == unselected) {
 				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
@@ -276,11 +271,27 @@ public class Principal extends JFrame implements ActionListener {
 				delReparto.setVisible(true);
 			}
 		}
-		// Acciones de los botones de Reparto
-		//addReparto.setVisible(o.equals(btnNewReparto));
-		// br.setVisible(o.equals(btnDelReparto));
-		// mr.setVisible(o.equals(btnUpdReparto));
-		// vr.setVisible(o.equals(btnSeeReparto));
+		if (o.equals(btnUpdReparto)) {
+			if (tablaReparto.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
+				//modReparto.cargarDatos(idReparto);
+				modReparto.setVisible(true);
+			}
+		}
+		
+		if (o.equals(btnSeeReparto)) {
+			if (tablaReparto.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
+				verReparto.cargarDatos(idReparto);
+				verReparto.setVisible(true);
+			}
+		} 
 
 	}
 

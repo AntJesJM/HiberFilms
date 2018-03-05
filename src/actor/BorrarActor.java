@@ -29,6 +29,7 @@ public class BorrarActor extends JFrame implements ActionListener {
 		setSize(250, 150);
 		setResizable(false);
 		setLayout(new FlowLayout());
+		setLocationRelativeTo(null);
 
 		add(lblBorrado);
 		add(lblActor);
@@ -44,7 +45,7 @@ public class BorrarActor extends JFrame implements ActionListener {
 	
 	public void cargarDatos(int id) {
 		ac = ActorDAO.buscarPorID(id);
-		lblActor.setText(ac.getNombre());
+		lblActor.setText(ac.getNombre()+" "+ac.getApellido());
 	}
 
 	public void actionPerformed(ActionEvent e) {

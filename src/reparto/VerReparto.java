@@ -43,7 +43,7 @@ public class VerReparto extends JFrame implements ActionListener {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 		panelDatos.setLayout(new GridLayout(4, 2));
-		panelDatos.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
 

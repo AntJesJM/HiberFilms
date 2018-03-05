@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import antJesJM.hf.Principal;
@@ -26,38 +27,38 @@ public class ModificarActor extends JFrame implements ActionListener {
 
 	JDialog dlgconfirmar = new JDialog();
 	JLabel lblconf = new JLabel("¿Está seguro de que quiere modificar?");
-	JButton btnconfirm = new JButton("Aceptar");
-	JButton btncanc = new JButton("Cancelar");
+	JButton btnConfirmDia = new JButton("Aceptar");
+	JButton btnCancelDia = new JButton("Cancelar");
 
 	JPanel panelDatos = new JPanel();
 	JPanel panelBotones = new JPanel();
 
-	JLabel lblNombre = new JLabel("nombre");
-	JLabel lblApellido = new JLabel("apellido");
-	JLabel lblNacionalidad = new JLabel("nacionalidad");
-	JLabel lblEdad = new JLabel("edad");
+	JLabel lblNombre = new JLabel("Nombre: ");
+	JLabel lblApellido = new JLabel("Apellido: ");
+	JLabel lblNacionalidad = new JLabel("Nacionalidad: ");
+	JLabel lblEdad = new JLabel("Edad: ");
 
-	
 	JFormattedTextField txtNombre;
 	JFormattedTextField txtApellido;
 	JFormattedTextField txtNacionalidad;
 	JFormattedTextField txtEdad;
-	
+
 	JButton btnConfirm = new JButton("Confirmar");
-	JButton btnCancelar = new JButton("Cancelar");
-	
+	JButton btnCancel = new JButton("Cancelar");
+
 	Actor ac;
 
 	public ModificarActor() {
 		setTitle("Modificar Actor");
 		setSize(300, 200);
 		setResizable(false);
-		
+		setLocationRelativeTo(null);
+
 		MaskFormatter maskNombre = null;
 		MaskFormatter maskApellido = null;
 		MaskFormatter maskNacionalidad = null;
 		MaskFormatter maskEdad = null;
-		
+
 		try {
 			maskNombre = new MaskFormatter("********************");
 			maskApellido = new MaskFormatter("**********************************************************************");
@@ -74,6 +75,7 @@ public class ModificarActor extends JFrame implements ActionListener {
 		txtEdad = new JFormattedTextField(maskEdad);
 
 		dlgconfirmar.setTitle("Confirmación");
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
@@ -88,24 +90,24 @@ public class ModificarActor extends JFrame implements ActionListener {
 		panelDatos.add(txtEdad);
 
 		panelBotones.add(btnConfirm);
-		panelBotones.add(btnCancelar);
+		panelBotones.add(btnCancel);
 
 		add(panelDatos);
 		add(panelBotones);
 
 		btnConfirm.addActionListener(this);
-		btnCancelar.addActionListener(this);
+		btnCancel.addActionListener(this);
 
-		btnconfirm.addActionListener(this);
-		btncanc.addActionListener(this);
+		btnConfirmDia.addActionListener(this);
+		btnCancelDia.addActionListener(this);
 
 		dlgconfirmar.setLayout(new FlowLayout());
 		dlgconfirmar.add(lblconf);
-		dlgconfirmar.add(btnconfirm);
-		dlgconfirmar.add(btncanc);
+		dlgconfirmar.add(btnConfirmDia);
+		dlgconfirmar.add(btnCancelDia);
 		dlgconfirmar.setSize(250, 150);
 		dlgconfirmar.setVisible(false);
-
+		dlgconfirmar.setLocationRelativeTo(null);
 		setVisible(false);
 
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -119,35 +121,35 @@ public class ModificarActor extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
-		if (o.equals(btnCancelar)) {
+		if (o.equals(btnCancel)) {
 			setVisible(false);
 		} else if (o.equals(btnConfirm)) {
 			if (txtNombre.getText().trim().isEmpty() || txtApellido.getText().trim().isEmpty()
 					|| txtNacionalidad.getText().trim().isEmpty() || txtEdad.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar todos los campos", "Error",
 						JOptionPane.ERROR_MESSAGE);
-			}  else {
+			} else {
 				actualizarActor();
 				setVisible(false);
 			}
 
 		}
-		if (o.equals(btnconfirm)) {
+		if (o.equals(btnConfirmDia)) {
 			dlgconfirmar.setVisible(false);
 			setVisible(false);
-		} else if (o.equals(btncanc)) {
+		} else if (o.equals(btnCancelDia)) {
 			dlgconfirmar.setVisible(false);
 		}
 
 	}
-	
+
 	public void actualizarActor() {
 		ac = ActorDAO.buscarPorID(Principal.idActor);
 		ac.setNombre(txtNombre.getText().trim());
 		ac.setApellido(txtApellido.getText().trim());
 		ac.setNacionalidad(txtNacionalidad.getText().trim());
 		ac.setEdad(Integer.parseInt(txtEdad.getText().trim()));
-		
+
 		ActorDAO.modificar(ac);
 		Principal.ActualizarTablas();
 		setVisible(false);

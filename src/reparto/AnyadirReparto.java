@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import antJesJM.hf.Principal;
@@ -36,8 +37,8 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 	JDialog dlgConfirmar = new JDialog();
 	JLabel lblConf = new JLabel("¿Está seguro de que quiere añadir?");
-	JButton btnConfirm = new JButton("Aceptar");
-	JButton btnCanc = new JButton("Cancelar");
+	JButton btnConfirmDia = new JButton("Aceptar");
+	JButton btnCancelDia = new JButton("Cancelar");
 	JRadioButton optSi = new JRadioButton("Si", true);
 	JRadioButton optNo = new JRadioButton("No", false);
 
@@ -45,17 +46,17 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 	JPanel panelBotones = new JPanel();
 	JPanel panelGrupoBtns = new JPanel();
 
-	JLabel lblActor = new JLabel("Actor");
-	JLabel lblPelicula = new JLabel("Pelicula");
-	JLabel lblPapel = new JLabel("Papel interpretado");
-	JLabel lblPremio = new JLabel("¿Ha recibido algun premio?");
+	JLabel lblActor = new JLabel("Actor: ");
+	JLabel lblPelicula = new JLabel("Pelicula: ");
+	JLabel lblPapel = new JLabel("Papel interpretado: ");
+	JLabel lblPremio = new JLabel("¿Ha recibido algun premio?: ");
 
 	Choice cActor = new Choice();
 	Choice cPelicula = new Choice();
 	JTextField txtPapel = new JTextField();
 	ButtonGroup groupPremio = new ButtonGroup();
 
-	JButton btnGuardar = new JButton("Guardar");
+	JButton btnConfirmar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
 	
 	boolean prem;
@@ -64,10 +65,14 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		setTitle("Añadir Reparto");
 		setSize(300, 200);
 		setResizable(false);
+		setLocationRelativeTo(null);
+		rellenarActores();
+		rellenarPeliculas();
 		MaskFormatter maskPapel = new MaskFormatter("********************");
 		txtPapel = new JFormattedTextField(maskPapel);
 
 		dlgConfirmar.setTitle("Confirmación");
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
 		panelGrupoBtns.setLayout(new GridLayout(1, 2));
@@ -88,25 +93,25 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		panelDatos.add(lblPremio);
 		panelDatos.add(panelGrupoBtns);
 
-		panelBotones.add(btnGuardar);
+		panelBotones.add(btnConfirmar);
 		panelBotones.add(btnCancelar);
 
 		add(panelDatos);
 		add(panelBotones);
 
-		btnGuardar.addActionListener(this);
+		btnConfirmar.addActionListener(this);
 		btnCancelar.addActionListener(this);
 
-		btnConfirm.addActionListener(this);
-		btnCanc.addActionListener(this);
+		btnConfirmDia.addActionListener(this);
+		btnCancelDia.addActionListener(this);
 
 		dlgConfirmar.setLayout(new FlowLayout());
 		dlgConfirmar.add(lblConf);
-		dlgConfirmar.add(btnConfirm);
-		dlgConfirmar.add(btnCanc);
+		dlgConfirmar.add(btnConfirmDia);
+		dlgConfirmar.add(btnCancelDia);
 		dlgConfirmar.setSize(250, 150);
 		dlgConfirmar.setVisible(false);
-
+		dlgConfirmar.setLocationRelativeTo(null);
 		setVisible(false);
 
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -122,19 +127,19 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 		if (o.equals(btnCancelar)) {
 			setVisible(false);
-		} else if (o.equals(btnGuardar)) {
+		} else if (o.equals(btnConfirmar)) {
 			dlgConfirmar.setVisible(true);
 
 		}
-		if (o.equals(btnConfirm)) {
+		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
 			setVisible(false);
-		} else if (o.equals(btnCanc)) {
+		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 
 	}
-	public void RellenarActores() {
+	public void rellenarActores() {
 		cActor.removeAll();
 		idActor.clear();
 		List<Actor> busqActor = ActorDAO.buscarTodos();
@@ -143,17 +148,17 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 			cActor.addItem(a.getApellido()+ ", "+a.getNombre());
 		}
 	}
-	public void RellenarPeliculas() {
+	public void rellenarPeliculas() {
 		cPelicula.removeAll();
 		idPelicula.clear();
 		List<Pelicula> busqPel = PeliculaDAO.buscarTodos();
 		for (Pelicula pel : busqPel) {
-			idActor.add(pel.getIdPelicula());
-			cActor.addItem(pel.getTitulo());
+			idPelicula.add(pel.getIdPelicula());
+			cPelicula.addItem(pel.getTitulo());
 		}
 	}
 
-	public void CrearReparto() {
+	public void crearReparto() {
 		if (groupPremio.getSelection() == optSi) {
 			prem = true;
 		} else {

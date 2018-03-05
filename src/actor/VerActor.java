@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import antJesJM.hf.Principal;
 import clases.Actor;
@@ -23,10 +24,10 @@ public class VerActor extends JFrame implements ActionListener {
 	JPanel panelDatos = new JPanel();
 	JPanel panelBotones = new JPanel();
 
-	JLabel lblNombre = new JLabel("nombre");
-	JLabel lblApellido = new JLabel("apellido");
-	JLabel lblNacionalidad = new JLabel("nacionalidad");
-	JLabel lblEdad = new JLabel("edad");
+	JLabel lblNombre = new JLabel("Nombre: ");
+	JLabel lblApellido = new JLabel("Apellido: ");
+	JLabel lblNacionalidad = new JLabel("Nacionalidad: ");
+	JLabel lblEdad = new JLabel("Edad: ");
 
 	JLabel txtNombre = new JLabel();
 	JLabel txtApellido = new JLabel();
@@ -39,8 +40,9 @@ public class VerActor extends JFrame implements ActionListener {
 		setTitle("Modificar Actor");
 		setSize(300, 200);
 		setResizable(false);
-
+		setLocationRelativeTo(null);
 		panelDatos.setLayout(new GridLayout(4, 2));
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
 
@@ -75,14 +77,14 @@ public class VerActor extends JFrame implements ActionListener {
 		setVisible(!e.getSource().equals(btnCerrar));
 
 	}
-	
+
 	public void cargarDatos(int id) {
 		Actor a = ActorDAO.buscarPorID(Principal.idActor);
 		txtNombre.setText(a.getNombre());
 		txtApellido.setText(a.getApellido());
 		txtNacionalidad.setText(a.getNacionalidad());
 		txtEdad.setText(a.getEdad() + "");
-		
+
 	}
 
 }

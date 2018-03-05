@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.transaction.Transactional.TxType;
@@ -28,16 +29,16 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 	String[] datos = new String[4];
 	JDialog dlgConfirmar = new JDialog();
 	JLabel lblConfirm = new JLabel("¿Está seguro de que quiere modificar?");
-	JButton btnAceptar = new JButton("Aceptar");
-	JButton btnCancelar = new JButton("Cancelar");
+	JButton btnConfirmDia = new JButton("Aceptar");
+	JButton btnCancelDia = new JButton("Cancelar");
 
 	JPanel panelDatos = new JPanel();
 	JPanel panelBotones = new JPanel();
 
-	JLabel lblTitulo = new JLabel("Título ");
-	JLabel lblAnyo = new JLabel("Año");
-	JLabel lblGenero = new JLabel("Género");
-	JLabel lblDirector = new JLabel("Director");
+	JLabel lblTitulo = new JLabel("Título: ");
+	JLabel lblAnyo = new JLabel("Año: ");
+	JLabel lblGenero = new JLabel("Género: ");
+	JLabel lblDirector = new JLabel("Director: ");
 
 	JFormattedTextField txtTitulo;
 	JFormattedTextField txtAnio;
@@ -75,6 +76,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		txtDirector = new JFormattedTextField(maskDir);
 
 		dlgConfirmar.setTitle("Confirmación");
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
@@ -97,14 +99,14 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		btnConfirm.addActionListener(this);
 		btnCancel.addActionListener(this);
 
-		btnAceptar.addActionListener(this);
-		btnCancelar.addActionListener(this);
+		btnConfirmDia.addActionListener(this);
+		btnCancelDia.addActionListener(this);
 
 		dlgConfirmar.setLayout(new FlowLayout());
 		dlgConfirmar.setLocationRelativeTo(null);
 		dlgConfirmar.add(lblConfirm);
-		dlgConfirmar.add(btnAceptar);
-		dlgConfirmar.add(btnCancelar);
+		dlgConfirmar.add(btnConfirmDia);
+		dlgConfirmar.add(btnCancelDia);
 		dlgConfirmar.setSize(250, 150);
 		dlgConfirmar.setVisible(false);
 	}
@@ -122,7 +124,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 			dlgConfirmar.setVisible(true);
 
 		}
-		if (o.equals(btnAceptar)) {
+		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
 			if (txtTitulo.getText().trim().isEmpty() || txtAnio.getText().trim().isEmpty()
 					|| txtGenero.getText().trim().isEmpty() || txtDirector.getText().trim().isEmpty()) {
@@ -136,7 +138,7 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 				setVisible(false);
 			}
 		}
-		if (o.equals(btnCancelar)) {
+		if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 	}

@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import antJesJM.hf.Principal;
@@ -26,23 +27,23 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 
 	JDialog dlgConfirmar = new JDialog();
 	JLabel lblConfirm = new JLabel("¿Está seguro de añadir esta entrada?");
-	JButton btnAceptar = new JButton("Aceptar");
-	JButton btnCancelar = new JButton("Cancelar");
+	JButton btnConfirmDia = new JButton("Aceptar");
+	JButton btnCancelDia = new JButton("Cancelar");
 
 	JPanel panelDatos = new JPanel(new GridLayout(4, 2));
 	JPanel panelBotones = new JPanel(new FlowLayout());
 
-	JLabel lblTitulo = new JLabel("Título ");
-	JLabel lblAnyo = new JLabel("Año");
-	JLabel lblGenero = new JLabel("Género");
-	JLabel lblDirector = new JLabel("Director");
+	JLabel lblTitulo = new JLabel("Título: ");
+	JLabel lblAnyo = new JLabel("Año: ");
+	JLabel lblGenero = new JLabel("Género: ");
+	JLabel lblDirector = new JLabel("Director: ");
 
 	JFormattedTextField txtTitulo;
 	JFormattedTextField txtAnio;
 	JFormattedTextField txtGenero;
 	JFormattedTextField txtDirector;
 
-	JButton btnGrabar = new JButton("Grabar");
+	JButton btnConfirm = new JButton("Grabar");
 	JButton btnCancel = new JButton("Cancelar");
 
 	public AnyadirPelicula() {
@@ -71,7 +72,7 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 		setLayout(new GridLayout(2, 1));
 		setVisible(false);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
-
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelDatos.add(lblTitulo);
 		panelDatos.add(txtTitulo);
 		panelDatos.add(lblAnyo);
@@ -80,23 +81,23 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 		panelDatos.add(txtGenero);
 		panelDatos.add(lblDirector);
 		panelDatos.add(txtDirector);
-		panelBotones.add(btnGrabar);
+		panelBotones.add(btnConfirm);
 		panelBotones.add(btnCancel);
 
 		add(panelDatos);
 		add(panelBotones);
 
-		btnGrabar.addActionListener(this);
+		btnConfirm.addActionListener(this);
 		btnCancel.addActionListener(this);
-		btnAceptar.addActionListener(this);
-		btnCancelar.addActionListener(this);
+		btnConfirmDia.addActionListener(this);
+		btnCancelDia.addActionListener(this);
 
 		dlgConfirmar.setTitle("Confirmación");
 		dlgConfirmar.setLayout(new FlowLayout());
 		dlgConfirmar.setLocationRelativeTo(null);
 		dlgConfirmar.add(lblConfirm);
-		dlgConfirmar.add(btnAceptar);
-		dlgConfirmar.add(btnCancelar);
+		dlgConfirmar.add(btnConfirmDia);
+		dlgConfirmar.add(btnCancelDia);
 		dlgConfirmar.setSize(250, 150);
 		dlgConfirmar.setVisible(false);
 
@@ -111,11 +112,11 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 
 		if (o.equals(btnCancel)) {
 			setVisible(false);
-		} else if (o.equals(btnGrabar)) {
+		} else if (o.equals(btnConfirm)) {
 			dlgConfirmar.setVisible(true);
 
 		}
-		if (o.equals(btnAceptar)) {
+		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
 			if (txtTitulo.getText().trim().isEmpty() || txtAnio.getText().trim().isEmpty()
 					|| txtGenero.getText().trim().isEmpty() || txtDirector.getText().trim().isEmpty()) {
@@ -129,7 +130,7 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 				setVisible(false);
 			}
 		}
-		if (o.equals(btnCancelar)) {
+		if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 

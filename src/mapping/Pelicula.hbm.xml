@@ -20,7 +20,7 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		<property name="director" type="string">
 			<column name="director" length="30" not-null="false" />
 		</property>
-		<set name="reparto">
+		<set name="reparto" inverse="true" cascade="delete" >
 			<key>
 				<column name="pelicula" not-null="true" />
 			</key>

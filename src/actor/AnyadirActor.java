@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import antJesJM.hf.Principal;
@@ -26,26 +27,26 @@ public class AnyadirActor extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	JDialog dlgconfirmar = new JDialog();
-	JLabel lblconf = new JLabel("¿Está seguro de que quiere añadir?");
-	JButton btnconfirm = new JButton("Aceptar");
-	JButton btncanc = new JButton("Cancelar");
+	JDialog dlgConfirmar = new JDialog();
+	JLabel lblConf = new JLabel("¿Está seguro de que quiere añadir?");
+	JButton btnConfirmDia = new JButton("Aceptar");
+	JButton btnCancelDia = new JButton("Cancelar");
 
 	JPanel panelDatos = new JPanel();
 	JPanel panelBotones = new JPanel();
 
-	JLabel lblNombre = new JLabel("nombre");
-	JLabel lblApellido = new JLabel("apellido");
-	JLabel lblNacionalidad = new JLabel("nacionalidad");
-	JLabel lblEdad = new JLabel("edad");
+	JLabel lblNombre = new JLabel("Nombre: ");
+	JLabel lblApellido = new JLabel("Apellido: ");
+	JLabel lblNacionalidad = new JLabel("Nacionalidad: ");
+	JLabel lblEdad = new JLabel("Edad: ");
 
 	JFormattedTextField txtNombre;
 	JFormattedTextField txtApellido;
 	JFormattedTextField txtNacionalidad;
 	JFormattedTextField txtEdad;
 
-	JButton btnGrabar = new JButton("Grabar");
-	JButton btnCancelar = new JButton("Cancelar");
+	JButton btnConfirm = new JButton("Grabar");
+	JButton btnCancel = new JButton("Cancelar");
 
 	public AnyadirActor() {
 
@@ -72,9 +73,11 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		setTitle("Añadir Actor");
 		setSize(300, 200);
 		setResizable(false);
+		setLocationRelativeTo(null);
 
-		dlgconfirmar.setTitle("Confirmación");
+		dlgConfirmar.setTitle("Confirmación");
 		panelDatos.setLayout(new GridLayout(4, 2));
+		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelBotones.setLayout(new FlowLayout());
 		setLayout(new GridLayout(2, 1));
 
@@ -87,24 +90,24 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		panelDatos.add(lblEdad);
 		panelDatos.add(txtEdad);
 
-		panelBotones.add(btnGrabar);
-		panelBotones.add(btnCancelar);
+		panelBotones.add(btnConfirm);
+		panelBotones.add(btnCancel);
 
 		add(panelDatos);
 		add(panelBotones);
 
-		btnGrabar.addActionListener(this);
-		btnCancelar.addActionListener(this);
-		btnconfirm.addActionListener(this);
-		btncanc.addActionListener(this);
+		btnConfirm.addActionListener(this);
+		btnCancel.addActionListener(this);
+		btnConfirmDia.addActionListener(this);
+		btnCancelDia.addActionListener(this);
 
-		dlgconfirmar.setLayout(new FlowLayout());
-		dlgconfirmar.add(lblconf);
-		dlgconfirmar.add(btnconfirm);
-		dlgconfirmar.add(btncanc);
-		dlgconfirmar.setSize(250, 150);
-		dlgconfirmar.setVisible(false);
-
+		dlgConfirmar.setLayout(new FlowLayout());
+		dlgConfirmar.add(lblConf);
+		dlgConfirmar.add(btnConfirmDia);
+		dlgConfirmar.add(btnCancelDia);
+		dlgConfirmar.setSize(250, 150);
+		dlgConfirmar.setVisible(false);
+		dlgConfirmar.setLocationRelativeTo(null);
 		setVisible(false);
 
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -118,18 +121,18 @@ public class AnyadirActor extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
-		if (o.equals(btnCancelar)) {
+		if (o.equals(btnCancel)) {
 			setVisible(false);
-		} else if (o.equals(btnGrabar)) {
-			dlgconfirmar.setVisible(true);
+		} else if (o.equals(btnConfirm)) {
+			dlgConfirmar.setVisible(true);
 
 		}
-		if (o.equals(btnconfirm)) {
-			dlgconfirmar.setVisible(false);
+		if (o.equals(btnConfirmDia)) {
+			dlgConfirmar.setVisible(false);
 			setVisible(false);
 			CrearActor();
-		} else if (o.equals(btncanc)) {
-			dlgconfirmar.setVisible(false);
+		} else if (o.equals(btnCancelDia)) {
+			dlgConfirmar.setVisible(false);
 		}
 
 	}
