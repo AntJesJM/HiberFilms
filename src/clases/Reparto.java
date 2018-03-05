@@ -19,6 +19,12 @@ public class Reparto implements Serializable {
 		this.actor=actor;
 	}
 
+	public Reparto(String papel, boolean prem, Pelicula pelicula, Actor actor) {
+		this.papel=papel;
+		this.premio=premio;
+		this.pelicula=pelicula;
+		this.actor=actor;
+	}
 	public Integer getIdReparto() {
 		return idReparto;
 	}

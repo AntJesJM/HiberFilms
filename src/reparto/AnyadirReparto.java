@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -20,12 +21,18 @@ import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
 import antJesJM.hf.Principal;
+import clases.Actor;
+import clases.Pelicula;
 import clases.Reparto;
+import clasesDAO.ActorDAO;
+import clasesDAO.PeliculaDAO;
 import clasesDAO.RepartoDAO;
 
 public class AnyadirReparto extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	static ArrayList idActor = new ArrayList();
+	static ArrayList idPelicula = new ArrayList();
 
 	JDialog dlgConfirmar = new JDialog();
 	JLabel lblConf = new JLabel("¿Está seguro de que quiere añadir?");
@@ -50,6 +57,8 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
+	
+	boolean prem;
 
 	public AnyadirReparto() throws ParseException {
 		setTitle("Añadir Reparto");
@@ -125,25 +134,37 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		}
 
 	}
+	public void RellenarActores() {
+		cActor.removeAll();
+		idActor.clear();
+		List<Actor> busqActor = ActorDAO.buscarTodos();
+		for (Actor a : busqActor) {
+			idActor.add(a.getIdActor());
+			cActor.addItem(a.getApellido()+ ", "+a.getNombre());
+		}
+	}
+	public void RellenarPeliculas() {
+		cPelicula.removeAll();
+		idPelicula.clear();
+		List<Pelicula> busqPel = PeliculaDAO.buscarTodos();
+		for (Pelicula pel : busqPel) {
+			idActor.add(pel.getIdPelicula());
+			cActor.addItem(pel.getTitulo());
+		}
+	}
 
 	public void CrearReparto() {
-		List<Reparto> buscTod = RepartoDAO.buscarTodos();
-		int posicion = 0;
-		for (Reparto p : buscTod) {
-			if (p.getIdReparto() > posicion)
-				posicion = p.getIdReparto();
-
+		if (groupPremio.getSelection() == optSi) {
+			prem = true;
+		} else {
+			prem = false;
 		}
-		posicion++;
-		// if (groupPremio.getSelection() == "si") {
-		//
-		// }
-		// Reparto reprt = new Reparto(txtPapel.getText().trim(), valor,
-		// cPelicula.getSelectedItem().toString().trim(),
-		// cActor.getSelectedItem().toString().trim() );
-		// RepartoDAO.guardar(reprt);
-		Principal.ActualizarTablas();
-		setVisible(false);
+		int idActorCho = cActor.getSelectedIndex();
+		int idPeliculaCho = cPelicula.getSelectedIndex();
+		Actor actor = ActorDAO.buscarPorID((Integer) idActor.get(idActorCho));
+		Pelicula peli = PeliculaDAO.buscarPorID((Integer) idPelicula.get(idPeliculaCho));
+		
+		Reparto reprt = new Reparto(txtPapel.getText(), prem, peli, actor);
 	}
 
 }
