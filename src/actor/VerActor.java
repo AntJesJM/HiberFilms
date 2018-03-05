@@ -10,6 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import antJesJM.hf.Principal;
+import clases.Actor;
+import clases.Pelicula;
+import clasesDAO.ActorDAO;
+import clasesDAO.PeliculaDAO;
+
 public class VerActor extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -65,10 +71,18 @@ public class VerActor extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// Object o = e.getSource();
 
 		setVisible(!e.getSource().equals(btnCerrar));
 
+	}
+	
+	public void cargarDatos(int id) {
+		Actor a = ActorDAO.buscarPorID(Principal.idActor);
+		txtNombre.setText(a.getNombre());
+		txtApellido.setText(a.getApellido());
+		txtNacionalidad.setText(a.getNacionalidad());
+		txtEdad.setText(a.getEdad() + "");
+		
 	}
 
 }

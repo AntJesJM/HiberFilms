@@ -4,18 +4,23 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import antJesJM.hf.Principal;
 import clases.Actor;
+import clases.Pelicula;
 import clasesDAO.ActorDAO;
+import clasesDAO.PeliculaDAO;
 
 public class AnyadirActor extends JFrame implements ActionListener {
 
@@ -34,15 +39,36 @@ public class AnyadirActor extends JFrame implements ActionListener {
 	JLabel lblNacionalidad = new JLabel("nacionalidad");
 	JLabel lblEdad = new JLabel("edad");
 
-	static JTextField txtNombre = new JTextField();
-	static JTextField txtApellido = new JTextField();
-	static JTextField txtNacionalidad = new JTextField();
-	static JTextField txtEdad = new JTextField();
+	JFormattedTextField txtNombre;
+	JFormattedTextField txtApellido;
+	JFormattedTextField txtNacionalidad;
+	JFormattedTextField txtEdad;
 
 	JButton btnGrabar = new JButton("Grabar");
 	JButton btnCancelar = new JButton("Cancelar");
 
 	public AnyadirActor() {
+
+		MaskFormatter maskNombre = null;
+		MaskFormatter maskApellido = null;
+		MaskFormatter maskNacionalidad = null;
+		MaskFormatter maskEdad = null;
+
+		try {
+			maskNombre = new MaskFormatter("********************");
+			maskApellido = new MaskFormatter("**********************************************************************");
+			maskNacionalidad = new MaskFormatter("********************");
+			maskEdad = new MaskFormatter("###");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		txtNombre = new JFormattedTextField(maskNombre);
+		txtApellido = new JFormattedTextField(maskApellido);
+		txtNacionalidad = new JFormattedTextField(maskNacionalidad);
+		txtEdad = new JFormattedTextField(maskEdad);
+
 		setTitle("Añadir Actor");
 		setSize(300, 200);
 		setResizable(false);
@@ -69,7 +95,6 @@ public class AnyadirActor extends JFrame implements ActionListener {
 
 		btnGrabar.addActionListener(this);
 		btnCancelar.addActionListener(this);
-
 		btnconfirm.addActionListener(this);
 		btncanc.addActionListener(this);
 
@@ -108,28 +133,19 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		}
 
 	}
-	
-	public static void VaciarActor() {
-		txtNombre.setText("");
-		txtApellido.setText("");
-		txtEdad.setText("");
-		txtNacionalidad.setText("");
-	}
-	
+
 	public void CrearActor() {
 		List<Actor> buscar = ActorDAO.buscarTodos();
-		int id = 0;
-		
-		int filas = Principal.tablaActor.getRowCount();
-		
-		for(Actor a:buscar) {
-			if(a.getIdActor()>id) {
-				id = a.getIdActor();
-			}
+		int posicion = 0;
+		for (Actor a : buscar) {
+			if (a.getIdActor() > posicion)
+				posicion = a.getIdActor();
+
 		}
-		id++;
-		Actor actor = new Actor(txtNombre.getText(),txtApellido.getText(),txtNacionalidad.getText(),Integer.parseInt(txtEdad.getText()));
-		ActorDAO.guardar(actor);
+		posicion++;
+		Actor ac = new Actor(txtNombre.getText().trim(), txtApellido.getText().trim(), txtNacionalidad.getText().trim(),
+				Integer.parseInt(txtEdad.getText().trim()));
+		ActorDAO.guardar(ac);
 		Principal.ActualizarTablas();
 		setVisible(false);
 	}

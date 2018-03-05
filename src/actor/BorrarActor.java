@@ -8,6 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import antJesJM.hf.Principal;
+import clases.Actor;
+import clasesDAO.ActorDAO;
+import clasesDAO.PeliculaDAO;
+
 public class BorrarActor extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -17,6 +22,8 @@ public class BorrarActor extends JFrame implements ActionListener {
 	JButton btnAceptar = new JButton("Aceptar");
 	JButton btnCancelar = new JButton("Cancelar");
 
+	Actor ac;
+	
 	public BorrarActor() {
 		setTitle("Borrar Actor");
 		setSize(250, 150);
@@ -34,11 +41,18 @@ public class BorrarActor extends JFrame implements ActionListener {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setVisible(false);
 	}
+	
+	public void cargarDatos(int id) {
+		ac = ActorDAO.buscarPorID(id);
+		lblActor.setText(ac.getNombre());
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 
 		if (o.equals(btnAceptar)) {
+			ActorDAO.borrar(ac);
+			Principal.ActualizarTablas();
 			setVisible(false);
 		} else {
 			setVisible(false);

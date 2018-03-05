@@ -65,7 +65,7 @@ public class Principal extends JFrame implements ActionListener {
 	VerPelicula verPel = new VerPelicula();
 	
 	public static int idPelicula;
-	static int idActor;
+	public static int idActor;
 	static int idReparto;
 
 	JTabbedPane pestañas = new JTabbedPane();
@@ -190,16 +190,36 @@ public class Principal extends JFrame implements ActionListener {
 
 		if (o.equals(btnNewActor)) {
 			addActor.setVisible(true);
-			addActor.VaciarActor();
 		}
 		if (o.equals(btnDelActor)) {
-			delActor.setVisible(true);
+			if (tablaActor.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idActor = (Integer) arrIdActor.get(tablaActor.getSelectedRow());
+				delActor.cargarDatos(idActor);
+				delActor.setVisible(true);
+			}
 		}
 		if (o.equals(btnUpdActor)) {
-			modActor.setVisible(true);
+			if (tablaActor.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idActor = (Integer) arrIdActor.get(tablaActor.getSelectedRow());
+				modActor.cargarDatos(idActor);
+				modActor.setVisible(true);
+			}
 		}
 		if (o.equals(btnSeeActor)) {
-			verActor.setVisible(true);
+			if (tablaActor.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idActor = (Integer) arrIdActor.get(tablaActor.getSelectedRow());
+				verActor.cargarDatos(idActor);
+				verActor.setVisible(true);
+			}
 		}
 
 		// Acciones de los botones de Pelicula
