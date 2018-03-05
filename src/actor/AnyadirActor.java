@@ -58,7 +58,7 @@ public class AnyadirActor extends JFrame implements ActionListener {
 			maskNombre = new MaskFormatter("********************");
 			maskApellido = new MaskFormatter("**********************************************************************");
 			maskNacionalidad = new MaskFormatter("********************");
-			maskEdad = new MaskFormatter("###");
+			maskEdad = new MaskFormatter("##");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

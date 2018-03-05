@@ -66,7 +66,7 @@ public class Principal extends JFrame implements ActionListener {
 	
 	public static int idPelicula;
 	public static int idActor;
-	static int idReparto;
+	public static int idReparto;
 
 	JTabbedPane pestañas = new JTabbedPane();
 
@@ -256,7 +256,26 @@ public class Principal extends JFrame implements ActionListener {
 				verPel.setVisible(true);
 			}
 		}
-		
+		if (o.equals(btnSeeReparto)) {
+			if (tablaReparto.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
+				verReparto.cargarDatos(idReparto);
+				verReparto.setVisible(true);
+			}
+		} 
+		if (o.equals(btnDelReparto)) {
+			if (tablaReparto.getSelectedRow() == unselected) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
+				delReparto.cargarDatos(idReparto);
+				delReparto.setVisible(true);
+			}
+		}
 		// Acciones de los botones de Reparto
 		//addReparto.setVisible(o.equals(btnNewReparto));
 		// br.setVisible(o.equals(btnDelReparto));

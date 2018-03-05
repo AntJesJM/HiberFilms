@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,7 +19,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import actor.AnyadirActor;
+import antJesJM.hf.Principal;
+import clases.Reparto;
+import clasesDAO.RepartoDAO;
 
 public class AnyadirReparto extends JFrame implements ActionListener {
 
@@ -53,17 +56,17 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		setSize(300, 200);
 		setResizable(false);
 		MaskFormatter maskPapel = new MaskFormatter("********************");
-		txtPapel= new JFormattedTextField(maskPapel);
+		txtPapel = new JFormattedTextField(maskPapel);
 
 		dlgConfirmar.setTitle("Confirmación");
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
-		panelGrupoBtns.setLayout(new GridLayout(1,2));
+		panelGrupoBtns.setLayout(new GridLayout(1, 2));
 		setLayout(new GridLayout(2, 1));
-		
+
 		groupPremio.add(optSi);
 		groupPremio.add(optNo);
-		
+
 		panelGrupoBtns.add(optSi);
 		panelGrupoBtns.add(optNo);
 
@@ -101,8 +104,8 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		new AnyadirActor();
+	public static void main(String[] args) throws ParseException {
+		new AnyadirReparto();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -121,6 +124,26 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 			dlgConfirmar.setVisible(false);
 		}
 
+	}
+
+	public void CrearReparto() {
+		List<Reparto> buscTod = RepartoDAO.buscarTodos();
+		int posicion = 0;
+		for (Reparto p : buscTod) {
+			if (p.getIdReparto() > posicion)
+				posicion = p.getIdReparto();
+
+		}
+		posicion++;
+		// if (groupPremio.getSelection() == "si") {
+		//
+		// }
+		// Reparto reprt = new Reparto(txtPapel.getText().trim(), valor,
+		// cPelicula.getSelectedItem().toString().trim(),
+		// cActor.getSelectedItem().toString().trim() );
+		// RepartoDAO.guardar(reprt);
+		Principal.ActualizarTablas();
+		setVisible(false);
 	}
 
 }
