@@ -130,14 +130,14 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
 			setVisible(false);
-			CrearActor();
+			crearActor();
 		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 
 	}
 
-	public void CrearActor() {
+	public void crearActor() {
 		List<Actor> buscar = ActorDAO.buscarTodos();
 		int posicion = 0;
 		for (Actor a : buscar) {

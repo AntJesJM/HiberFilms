@@ -3,6 +3,7 @@ package antJesJM.hf;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -117,9 +118,11 @@ public class Principal extends JFrame implements ActionListener {
 	
 	public Principal()  {
 		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("ICON HF.png"));
+		
 		setResizable(false);
 		setTitle("HiberFilms");
-		setLayout(new GridLayout(1, 1));
+		getContentPane().setLayout(new GridLayout(1, 1));
 		setLocationRelativeTo(null);
 		scrollActor.setPreferredSize(new Dimension(400, 100));
 		scrollPelicula.setPreferredSize(new Dimension(400, 100));
@@ -151,7 +154,7 @@ public class Principal extends JFrame implements ActionListener {
 		pestañas.addTab("Actores", pnlActores);
 		pestañas.addTab("Películas", pnlPelicula);
 		pestañas.addTab("Reparto", pnlReparto);
-		add(pestañas);
+		getContentPane().add(pestañas);
 
 		tablaActor.setDefaultEditor(Object.class, null);
 		tablaPelicula.setDefaultEditor(Object.class, null);
@@ -253,6 +256,8 @@ public class Principal extends JFrame implements ActionListener {
 
 		// Acciones de los botones de Reparto
 		if (o.equals(btnNewReparto)) {
+			AnyadirReparto.rellenarActores();
+			AnyadirReparto.rellenarPeliculas();
 			addReparto.setVisible(true);
 		}
 		else if (tablaReparto.getSelectedRow() == unselected && (o.equals(btnDelReparto) || o.equals(btnUpdReparto) || o.equals(btnSeeReparto))) {
@@ -265,6 +270,7 @@ public class Principal extends JFrame implements ActionListener {
 				delReparto.setVisible(true);
 			}
 			if (o.equals(btnUpdReparto)) {
+//				
 				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
 				modReparto.cargarDatos(idReparto);
 				modReparto.setVisible(true);

@@ -55,8 +55,8 @@ public class ModificarReparto extends JFrame implements ActionListener {
 	JLabel lblPapel = new JLabel("Papel interpretado: ");
 	JLabel lblPremio = new JLabel("¿Ha recibido algun premio?: ");
 
-	Choice cActor = new Choice();
-	Choice cPelicula = new Choice();
+	static Choice cActor = new Choice();
+	static Choice cPelicula = new Choice();
 	JTextField txtPapel = new JTextField();
 	ButtonGroup groupPremio = new ButtonGroup();
 
@@ -65,6 +65,7 @@ public class ModificarReparto extends JFrame implements ActionListener {
 	// Reparto reprt;
 
 	public ModificarReparto()  {
+		Principal.ActualizarTablas();
 		setTitle("Modificar Reparto");
 		setSize(300, 200);
 		setResizable(false);
@@ -155,7 +156,8 @@ public class ModificarReparto extends JFrame implements ActionListener {
 
 	}
 
-	public void rellenarActores() {
+	public static void rellenarActores() {
+		Principal.ActualizarTablas();
 		cActor.removeAll();
 		idActores.clear();
 		// cActor.add("Seleccione actor");
@@ -166,7 +168,7 @@ public class ModificarReparto extends JFrame implements ActionListener {
 		}
 	}
 
-	public void rellenarPeliculas() {
+	public static void rellenarPeliculas() {
 		cPelicula.removeAll();
 		idPeliculas.clear();
 		// cPelicula.add("Seleccione pelicula");
@@ -178,6 +180,8 @@ public class ModificarReparto extends JFrame implements ActionListener {
 	}
 
 	public void cargarDatos(int id) {
+		rellenarActores();
+		rellenarPeliculas();
 		Reparto reprt = RepartoDAO.buscarPorID(id);
 
 		for (int i = 0; i < idPeliculas.size(); i++) {
@@ -199,6 +203,7 @@ public class ModificarReparto extends JFrame implements ActionListener {
 		} else {
 			optNo.setSelected(true);
 		}
+		
 	}
 
 	public void actualizarReparto() {

@@ -51,8 +51,8 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 	JLabel lblPapel = new JLabel("Papel interpretado: ");
 	JLabel lblPremio = new JLabel("¿Ha recibido algun premio?: ");
 
-	Choice cActor = new Choice();
-	Choice cPelicula = new Choice();
+	static Choice cActor = new Choice();
+	static Choice cPelicula = new Choice();
 	JTextField txtPapel = new JTextField();
 	ButtonGroup groupPremio = new ButtonGroup();
 
@@ -62,12 +62,11 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 	boolean prem;
 
 	public AnyadirReparto() {
+		
 		setTitle("Añadir Reparto");
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		rellenarActores();
-		rellenarPeliculas();
 		MaskFormatter maskPapel = null;
 		try {
 			maskPapel = new MaskFormatter("********************");
@@ -149,7 +148,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 	}
 
-	public void rellenarActores() {
+	public static void rellenarActores() {
 		cActor.removeAll();
 		idActor.clear();
 		List<Actor> busqActor = ActorDAO.buscarTodos();
@@ -159,7 +158,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		}
 	}
 
-	public void rellenarPeliculas() {
+	public static void rellenarPeliculas() {
 		cPelicula.removeAll();
 		idPelicula.clear();
 		List<Pelicula> busqPel = PeliculaDAO.buscarTodos();

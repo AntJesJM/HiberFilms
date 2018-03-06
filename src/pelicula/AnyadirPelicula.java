@@ -126,7 +126,7 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(getContentPane(), "La primera película data de 1895", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
-				CrearPelicula();
+				crearPelicula();
 				setVisible(false);
 			}
 		}
@@ -136,7 +136,7 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 
 	}
 
-	public void CrearPelicula() {
+	public void crearPelicula() {
 		List<Pelicula> buscTod = PeliculaDAO.buscarTodos();
 		int posicion = 0;
 		for (Pelicula p : buscTod) {
