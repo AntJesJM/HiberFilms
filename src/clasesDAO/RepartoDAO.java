@@ -18,7 +18,7 @@ public class RepartoDAO {
 		return rep;
 	}
 
-	public static void modificarLoc(Reparto rep) {
+	public static void modificar(Reparto rep) {
 		Principal.session.beginTransaction();
 		Principal.session.update(rep);
 		Principal.session.getTransaction().commit();

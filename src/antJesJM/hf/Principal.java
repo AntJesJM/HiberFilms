@@ -252,7 +252,7 @@ public class Principal extends JFrame implements ActionListener {
 			}
 			if (o.equals(btnUpdReparto)) {
 				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
-				// modReparto.cargarDatos(idReparto);
+				modReparto.cargarDatos(idReparto);
 				modReparto.setVisible(true);
 			}
 			if (o.equals(btnSeeReparto)) {

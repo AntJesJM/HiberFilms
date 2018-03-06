@@ -6,13 +6,17 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -21,14 +25,19 @@ import javax.swing.text.MaskFormatter;
 
 import actor.AnyadirActor;
 import antJesJM.hf.Principal;
+import clases.Actor;
 import clases.Pelicula;
 import clases.Reparto;
+import clasesDAO.ActorDAO;
 import clasesDAO.PeliculaDAO;
 import clasesDAO.RepartoDAO;
 
 public class ModificarReparto extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	static ArrayList idActores = new ArrayList();
+	static ArrayList idPeliculas = new ArrayList();
+	boolean prem;
 
 	JDialog dlgConfirmar = new JDialog();
 	JLabel lblConf = new JLabel("¿Está seguro de querer modificar?");
@@ -53,13 +62,15 @@ public class ModificarReparto extends JFrame implements ActionListener {
 
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
-	Reparto reprt;
+	// Reparto reprt;
 
 	public ModificarReparto() throws ParseException {
-		setTitle("Añadir Reparto");
+		setTitle("Modificar Reparto");
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		rellenarActores();
+		rellenarPeliculas();
 		MaskFormatter maskPapel = new MaskFormatter("********************");
 		txtPapel = new JFormattedTextField(maskPapel);
 
@@ -124,28 +135,86 @@ public class ModificarReparto extends JFrame implements ActionListener {
 		}
 		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
-			setVisible(false);
+			if (txtPapel.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar el campo papel", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}else {
+				actualizarReparto();
+				setVisible(false);
+			}
+			
 		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 
 	}
-	// public void actualizarReparto() {
-	// reprt = RepartoDAO.buscarPorID(Principal.idPelicula);
-	// reprt.setActor(cActor.getSelectedItem().trim());
-	// reprt.setPelicula(cPelicula.getSelectedItem().trim());
-	// reprt.setPapel(txtPapel.getText().trim());
-	// reprt.setPremio();
-	// RepartoDAO.modificar(reprt);
-	// Principal.ActualizarTablas();
-	// setVisible(false);
-	// }
-	//
-	// public void cargarDatos(int id) {
-	// Pelicula p = PeliculaDAO.buscarPorID(Principal.idPelicula);
-	// txtTitulo.setValue(p.getTitulo());
-	// txtAnio.setValue(p.getAnio() + "");
-	// txtGenero.setValue(p.getGenero());
-	// txtDirector.setValue(p.getDirector());
-	// }
+
+	public void rellenarActores() {
+		cActor.removeAll();
+		idActores.clear();
+		// cActor.add("Seleccione actor");
+		List<Actor> busqActor = ActorDAO.buscarTodos();
+		for (Actor a : busqActor) {
+			idActores.add(a.getIdActor());
+			cActor.addItem(a.getApellido() + ", " + a.getNombre());
+		}
+	}
+
+	public void rellenarPeliculas() {
+		cPelicula.removeAll();
+		idPeliculas.clear();
+		// cPelicula.add("Seleccione pelicula");
+		List<Pelicula> busqPel = PeliculaDAO.buscarTodos();
+		for (Pelicula pel : busqPel) {
+			idPeliculas.add(pel.getIdPelicula());
+			cPelicula.addItem(pel.getTitulo());
+		}
+	}
+
+	public void cargarDatos(int id) {
+		Reparto reprt = RepartoDAO.buscarPorID(id);
+
+		for (int i = 0; i < idPeliculas.size(); i++) {
+			if (idPeliculas.get(i).equals(reprt.getPelicula().getIdPelicula())) {
+				cPelicula.select(i);
+			}
+
+		}
+		for (int i = 0; i < idActores.size(); i++) {
+			if (idActores.get(i).equals(reprt.getActor().getIdActor())) {
+				cActor.select(i);
+			}
+
+		}
+
+		txtPapel.setText(reprt.getPapel());
+		if (reprt.isPremio() == true) {
+			optSi.setSelected(true);
+		} else {
+			optNo.setSelected(true);
+		}
+	}
+
+	public void actualizarReparto() {
+
+		if (groupPremio.getSelection() == optSi) {
+			prem = true;
+		} else {
+			prem = false;
+		}
+		int idActorCho = cActor.getSelectedIndex();
+		int idPeliculaCho = cPelicula.getSelectedIndex();
+
+		Pelicula peli = PeliculaDAO.buscarPorID((Integer) idPeliculas.get(idPeliculaCho));
+		Actor actor = ActorDAO.buscarPorID((Integer) idActores.get(idActorCho));
+		Reparto reprt = RepartoDAO.buscarPorID(Principal.idReparto);
+		reprt.setPapel(txtPapel.getText());
+		reprt.setPremio(prem);
+		reprt.setActor(actor);
+		reprt.setPelicula(peli);
+		RepartoDAO.modificar(reprt);
+		Principal.ActualizarTablas();
+		setVisible(false);
+	}
+
 }
