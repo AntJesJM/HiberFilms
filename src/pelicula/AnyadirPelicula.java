@@ -149,7 +149,6 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 				txtGenero.getText().trim(), txtDirector.getText().trim());
 		PeliculaDAO.guardar(peli);
 		Principal.ActualizarTablas();
-		setVisible(false);
 	}
 
 }

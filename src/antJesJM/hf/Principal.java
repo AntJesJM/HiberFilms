@@ -63,7 +63,7 @@ public class Principal extends JFrame implements ActionListener {
 	BorrarPelicula delPel = new BorrarPelicula();
 	ModificarPelicula modPel = new ModificarPelicula();
 	VerPelicula verPel = new VerPelicula();
-	
+
 	public static int idPelicula;
 	public static int idActor;
 	public static int idReparto;
@@ -158,7 +158,7 @@ public class Principal extends JFrame implements ActionListener {
 				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Nacionalidad", "Edad" }));
 		tablaPelicula.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Título", "Año", "Género" }));
 		tablaReparto.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Actor", "Película", "Papel" }));
-		
+
 		// Listeners del panel de Actor
 		btnNewActor.addActionListener(this);
 		btnDelActor.addActionListener(this);
@@ -187,35 +187,25 @@ public class Principal extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-
+		// Acciones de los botones de Actor
 		if (o.equals(btnNewActor)) {
 			addActor.setVisible(true);
-		}
-		if (o.equals(btnDelActor)) {
-			if (tablaActor.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+		} else if (tablaActor.getSelectedRow() == unselected
+				&& (o.equals(btnDelActor) || o.equals(btnUpdActor) || o.equals(btnSeeActor))) {
+			JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			if (o.equals(btnDelActor)) {
 				idActor = (Integer) arrIdActor.get(tablaActor.getSelectedRow());
 				delActor.cargarDatos(idActor);
 				delActor.setVisible(true);
 			}
-		}
-		if (o.equals(btnUpdActor)) {
-			if (tablaActor.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+			if (o.equals(btnUpdActor)) {
 				idActor = (Integer) arrIdActor.get(tablaActor.getSelectedRow());
 				modActor.cargarDatos(idActor);
 				modActor.setVisible(true);
 			}
-		}
-		if (o.equals(btnSeeActor)) {
-			if (tablaActor.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un Actor.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+			if (o.equals(btnSeeActor)) {
 				idActor = (Integer) arrIdActor.get(tablaActor.getSelectedRow());
 				verActor.cargarDatos(idActor);
 				verActor.setVisible(true);
@@ -225,74 +215,52 @@ public class Principal extends JFrame implements ActionListener {
 		// Acciones de los botones de Pelicula
 		if (o.equals(btnNewPelicula)) {
 			addPel.setVisible(true);
-		}
-		if (o.equals(btnDelPelicula)) {
-			if (tablaPelicula.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+		} else if (tablaPelicula.getSelectedRow() == unselected
+				&& (o.equals(btnDelPelicula) || o.equals(btnUpdPelicula) || o.equals(btnSeePelicula))) {
+			JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			if (o.equals(btnDelPelicula)) {
 				idPelicula = (Integer) arrIdPelicula.get(tablaPelicula.getSelectedRow());
 				delPel.cargarDatos(idPelicula);
 				delPel.setVisible(true);
 			}
-		}
-		if (o.equals(btnUpdPelicula)) {
-			if (tablaPelicula.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+			if (o.equals(btnUpdPelicula)) {
 				idPelicula = (Integer) arrIdPelicula.get(tablaPelicula.getSelectedRow());
 				modPel.cargarDatos(idPelicula);
 				modPel.setVisible(true);
 			}
-		}
-		if (o.equals(btnSeePelicula)) {
-			if (tablaPelicula.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar una película.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+			if (o.equals(btnSeePelicula)) {
 				idPelicula = (Integer) arrIdPelicula.get(tablaPelicula.getSelectedRow());
 				verPel.cargarDatos(idPelicula);
 				verPel.setVisible(true);
 			}
 		}
-		
+
 		// Acciones de los botones de Reparto
 		if (o.equals(btnNewReparto)) {
 			addReparto.setVisible(true);
 		}
-		if (o.equals(btnDelReparto)) {
-			if (tablaReparto.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+		else if (tablaReparto.getSelectedRow() == unselected && (o.equals(btnDelReparto) || o.equals(btnUpdReparto) || o.equals(btnSeeReparto))) {
+			JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			if (o.equals(btnDelReparto)) {
 				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
 				delReparto.cargarDatos(idReparto);
 				delReparto.setVisible(true);
 			}
-		}
-		if (o.equals(btnUpdReparto)) {
-			if (tablaReparto.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+			if (o.equals(btnUpdReparto)) {
 				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
-				//modReparto.cargarDatos(idReparto);
+				// modReparto.cargarDatos(idReparto);
 				modReparto.setVisible(true);
 			}
-		}
-		
-		if (o.equals(btnSeeReparto)) {
-			if (tablaReparto.getSelectedRow() == unselected) {
-				JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
+			if (o.equals(btnSeeReparto)) {
 				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
 				verReparto.cargarDatos(idReparto);
 				verReparto.setVisible(true);
 			}
-		} 
-
+		}
 	}
 
 	@SuppressWarnings("unchecked")

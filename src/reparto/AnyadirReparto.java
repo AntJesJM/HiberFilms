@@ -134,6 +134,8 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
 			setVisible(false);
+			crearReparto();
+			
 		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
@@ -168,8 +170,9 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		int idPeliculaCho = cPelicula.getSelectedIndex();
 		Actor actor = ActorDAO.buscarPorID((Integer) idActor.get(idActorCho));
 		Pelicula peli = PeliculaDAO.buscarPorID((Integer) idPelicula.get(idPeliculaCho));
-		
 		Reparto reprt = new Reparto(txtPapel.getText(), prem, peli, actor);
+		RepartoDAO.guardar(reprt);
+		Principal.ActualizarTablas();
 	}
 
 }

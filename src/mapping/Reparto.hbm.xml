@@ -11,7 +11,7 @@ PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		<property name="papel" type="string">
 			<column name="papel" length="20" not-null="false" />
 		</property>
-		<property name="premio" type="yes_no">
+		<property name="premio" type="boolean">
 			<column name="premio" not-null="false" />
 		</property>
 		<many-to-one name="pelicula">
