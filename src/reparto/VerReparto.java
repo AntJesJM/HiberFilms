@@ -11,9 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import antJesJM.hf.Principal;
 import clases.Reparto;
 import clasesDAO.RepartoDAO;
+import main.Principal;
 
 
 public class VerReparto extends JFrame implements ActionListener {
@@ -25,7 +25,7 @@ public class VerReparto extends JFrame implements ActionListener {
 	JLabel lblActor = new JLabel("Actor: ");
 	JLabel lblPelicula = new JLabel("Pelicula: ");
 	JLabel lblPapel = new JLabel("Papel: ");
-	JLabel lblPremio = new JLabel("¿Galardón?: ");
+	JLabel lblPremio = new JLabel("Galardónado: ");
 
 	JLabel txtActor = new JLabel();
 	JLabel txtPelicula = new JLabel();

@@ -10,9 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import antJesJM.hf.Principal;
 import clases.Reparto;
 import clasesDAO.RepartoDAO;
+import main.Principal;
 
 public class BorrarReparto extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;

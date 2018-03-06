@@ -21,7 +21,7 @@ public class Reparto implements Serializable {
 
 	public Reparto(String papel, boolean prem, Pelicula pelicula, Actor actor) {
 		this.papel=papel;
-		this.premio=premio;
+		this.premio=prem;
 		this.pelicula=pelicula;
 		this.actor=actor;
 	}

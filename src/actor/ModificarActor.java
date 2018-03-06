@@ -16,11 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import antJesJM.hf.Principal;
 import clases.Actor;
 import clases.Pelicula;
 import clasesDAO.ActorDAO;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class ModificarActor extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;

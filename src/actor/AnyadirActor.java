@@ -17,11 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import antJesJM.hf.Principal;
 import clases.Actor;
 import clases.Pelicula;
 import clasesDAO.ActorDAO;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class AnyadirActor extends JFrame implements ActionListener {
 
@@ -123,6 +123,10 @@ public class AnyadirActor extends JFrame implements ActionListener {
 
 		if (o.equals(btnCancel)) {
 			setVisible(false);
+			txtNombre.setText("");
+			txtApellido.setText("");
+			txtEdad.setText("");
+			txtNacionalidad.setText("");
 		} else if (o.equals(btnConfirm)) {
 			dlgConfirmar.setVisible(true);
 
@@ -131,6 +135,10 @@ public class AnyadirActor extends JFrame implements ActionListener {
 			dlgConfirmar.setVisible(false);
 			setVisible(false);
 			crearActor();
+			txtNombre.setText("");
+			txtApellido.setText("");
+			txtEdad.setText("");
+			txtNacionalidad.setText("");
 		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}

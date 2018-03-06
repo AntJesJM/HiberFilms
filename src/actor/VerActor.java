@@ -11,11 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import antJesJM.hf.Principal;
 import clases.Actor;
 import clases.Pelicula;
 import clasesDAO.ActorDAO;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class VerActor extends JFrame implements ActionListener {
 

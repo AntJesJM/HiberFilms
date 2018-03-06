@@ -24,13 +24,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import actor.AnyadirActor;
-import antJesJM.hf.Principal;
 import clases.Actor;
 import clases.Pelicula;
 import clases.Reparto;
 import clasesDAO.ActorDAO;
 import clasesDAO.PeliculaDAO;
 import clasesDAO.RepartoDAO;
+import main.Principal;
 
 public class ModificarReparto extends JFrame implements ActionListener {
 
@@ -51,9 +51,9 @@ public class ModificarReparto extends JFrame implements ActionListener {
 	JPanel panelGrupoBtns = new JPanel();
 
 	JLabel lblActor = new JLabel("Actor: ");
-	JLabel lblPelicula = new JLabel("Pelicula: ");
+	JLabel lblPelicula = new JLabel("Película: ");
 	JLabel lblPapel = new JLabel("Papel interpretado: ");
-	JLabel lblPremio = new JLabel("¿Ha recibido algun premio?: ");
+	JLabel lblPremio = new JLabel("Galardonado: ");
 
 	static Choice cActor = new Choice();
 	static Choice cPelicula = new Choice();
@@ -208,7 +208,7 @@ public class ModificarReparto extends JFrame implements ActionListener {
 
 	public void actualizarReparto() {
 
-		if (groupPremio.getSelection() == optSi) {
+		if (optSi.isSelected()) {
 			prem = true;
 		} else {
 			prem = false;

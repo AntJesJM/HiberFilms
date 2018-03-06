@@ -2,8 +2,8 @@ package clasesDAO;
 
 import java.util.List;
 
-import antJesJM.hf.Principal;
 import clases.Pelicula;
+import main.Principal;
 
 public class PeliculaDAO {
 	

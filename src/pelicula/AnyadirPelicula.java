@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import antJesJM.hf.Principal;
 import clases.Pelicula;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class AnyadirPelicula extends JFrame implements ActionListener {
 
@@ -112,6 +112,10 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 
 		if (o.equals(btnCancel)) {
 			setVisible(false);
+			txtTitulo.setText("");
+			txtAnio.setText("");
+			txtDirector.setText("");
+			txtGenero.setText("");
 		} else if (o.equals(btnConfirm)) {
 			dlgConfirmar.setVisible(true);
 
@@ -122,12 +126,16 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 					|| txtGenero.getText().trim().isEmpty() || txtDirector.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar todos los campos", "Error",
 						JOptionPane.ERROR_MESSAGE);
-			} else if (Integer.parseInt(txtAnio.getText().trim()) < 1895) {
-				JOptionPane.showMessageDialog(getContentPane(), "La primera película data de 1895", "Error",
+			} else if (Integer.parseInt(txtAnio.getText().trim()) < 1895 || Integer.parseInt(txtAnio.getText().trim()) > 2030) {
+				JOptionPane.showMessageDialog(getContentPane(), "Introduzca un valor entre 1895 y 2030", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				crearPelicula();
 				setVisible(false);
+				txtTitulo.setText("");
+				txtAnio.setText("");
+				txtDirector.setText("");
+				txtGenero.setText("");
 			}
 		}
 		if (o.equals(btnCancelDia)) {

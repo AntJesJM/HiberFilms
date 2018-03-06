@@ -8,10 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import antJesJM.hf.Principal;
 import clases.Actor;
 import clasesDAO.ActorDAO;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class BorrarActor extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;

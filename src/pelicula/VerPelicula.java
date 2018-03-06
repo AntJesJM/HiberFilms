@@ -11,9 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import antJesJM.hf.Principal;
 import clases.Pelicula;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class VerPelicula extends JFrame implements ActionListener {
 

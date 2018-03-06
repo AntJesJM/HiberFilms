@@ -19,9 +19,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.transaction.Transactional.TxType;
 
-import antJesJM.hf.Principal;
 import clases.Pelicula;
 import clasesDAO.PeliculaDAO;
+import main.Principal;
 
 public class ModificarPelicula extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
