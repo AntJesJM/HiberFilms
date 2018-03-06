@@ -58,17 +58,24 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 	JButton btnConfirmar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
-	
+
 	boolean prem;
 
-	public AnyadirReparto() throws ParseException {
+	public AnyadirReparto() {
 		setTitle("Añadir Reparto");
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		rellenarActores();
 		rellenarPeliculas();
-		MaskFormatter maskPapel = new MaskFormatter("********************");
+		MaskFormatter maskPapel = null;
+		try {
+			maskPapel = new MaskFormatter("********************");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		txtPapel = new JFormattedTextField(maskPapel);
 
 		dlgConfirmar.setTitle("Confirmación");
@@ -135,21 +142,23 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 			dlgConfirmar.setVisible(false);
 			setVisible(false);
 			crearReparto();
-			
+
 		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 
 	}
+
 	public void rellenarActores() {
 		cActor.removeAll();
 		idActor.clear();
 		List<Actor> busqActor = ActorDAO.buscarTodos();
 		for (Actor a : busqActor) {
 			idActor.add(a.getIdActor());
-			cActor.addItem(a.getApellido()+ ", "+a.getNombre());
+			cActor.addItem(a.getApellido() + ", " + a.getNombre());
 		}
 	}
+
 	public void rellenarPeliculas() {
 		cPelicula.removeAll();
 		idPelicula.clear();

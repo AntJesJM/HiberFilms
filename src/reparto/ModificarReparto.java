@@ -64,14 +64,20 @@ public class ModificarReparto extends JFrame implements ActionListener {
 	JButton btnCancelar = new JButton("Cancelar");
 	// Reparto reprt;
 
-	public ModificarReparto() throws ParseException {
+	public ModificarReparto()  {
 		setTitle("Modificar Reparto");
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		rellenarActores();
 		rellenarPeliculas();
-		MaskFormatter maskPapel = new MaskFormatter("********************");
+		MaskFormatter maskPapel=null;
+		try {
+			maskPapel = new MaskFormatter("********************");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		txtPapel = new JFormattedTextField(maskPapel);
 
 		dlgConfirmar.setTitle("Confirmación");

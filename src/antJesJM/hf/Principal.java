@@ -5,12 +5,18 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -53,7 +59,7 @@ public class Principal extends JFrame implements ActionListener {
 	VerActor verActor = new VerActor();
 
 	// Tabla Reparto
-	AnyadirReparto addReparto;
+	AnyadirReparto addReparto = new AnyadirReparto();
 	BorrarReparto delReparto = new BorrarReparto();
 	ModificarReparto modReparto = new ModificarReparto();
 	VerReparto verReparto = new VerReparto();
@@ -106,8 +112,11 @@ public class Principal extends JFrame implements ActionListener {
 	public static JTable tablaReparto = new JTable();
 	JScrollPane scrollReparto = new JScrollPane(tablaReparto);
 
-	public Principal() throws ParseException {
-		addReparto = new AnyadirReparto();
+	JMenuBar menuBar = new JMenuBar();
+	JMenuItem itemAyuda = new JMenuItem("Ayuda");
+	
+	public Principal()  {
+		
 		setResizable(false);
 		setTitle("HiberFilms");
 		setLayout(new GridLayout(1, 1));
@@ -116,6 +125,8 @@ public class Principal extends JFrame implements ActionListener {
 		scrollPelicula.setPreferredSize(new Dimension(400, 100));
 		scrollReparto.setPreferredSize(new Dimension(400, 100));
 
+		menuBar.add(itemAyuda);
+		setJMenuBar(menuBar);
 		pnlActores.add("Center", scrollActor);
 		pnlBtnActores.add(btnNewActor);
 		pnlBtnActores.add(btnDelActor);
@@ -179,6 +190,9 @@ public class Principal extends JFrame implements ActionListener {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		ActualizarTablas();
+		
+		
+		insertarAyuda();
 	}
 
 	public static void main(String[] args) throws ParseException {
@@ -304,5 +318,19 @@ public class Principal extends JFrame implements ActionListener {
 
 		}
 	}
+	private void insertarAyuda() {
+		try {
+			File fichero = new File("help/help_set.hs");
+			URL hsURL = fichero.toURI().toURL();
 
+			HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+			HelpBroker hb = helpset.createHelpBroker();
+			hb.enableHelpOnButton(itemAyuda, "principal", helpset);
+			hb.enableHelpKey(getContentPane(), "principal",
+					helpset);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
