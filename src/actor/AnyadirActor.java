@@ -12,15 +12,13 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import clases.Actor;
-import clases.Pelicula;
 import clasesDAO.ActorDAO;
-import clasesDAO.PeliculaDAO;
 import main.Principal;
 
 public class AnyadirActor extends JFrame implements ActionListener {
@@ -133,13 +131,21 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		}
 		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
+			if (txtNombre.getText().trim().isEmpty() || txtApellido.getText().trim().isEmpty()
+					|| txtNacionalidad.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar todos los campos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (txtEdad.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Si es menor de 10 años introduzca \n un 0 precediendo la edad", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
 			setVisible(false);
 			crearActor();
 			txtNombre.setText("");
 			txtApellido.setText("");
 			txtEdad.setText("");
 			txtNacionalidad.setText("");
-		} else if (o.equals(btnCancelDia)) {
+		} }else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
 		}
 
@@ -157,7 +163,7 @@ public class AnyadirActor extends JFrame implements ActionListener {
 		Actor ac = new Actor(txtNombre.getText().trim(), txtApellido.getText().trim(), txtNacionalidad.getText().trim(),
 				Integer.parseInt(txtEdad.getText().trim()));
 		ActorDAO.guardar(ac);
-		Principal.ActualizarTablas();
+		Principal.actualizarActor();
 		setVisible(false);
 	}
 

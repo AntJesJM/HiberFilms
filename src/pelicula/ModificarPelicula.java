@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,9 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
-import javax.transaction.Transactional.TxType;
 
 import clases.Pelicula;
 import clasesDAO.PeliculaDAO;
@@ -150,7 +147,8 @@ public class ModificarPelicula extends JFrame implements ActionListener {
 		peli.setGenero(txtGenero.getText().trim());
 		peli.setDirector(txtDirector.getText().trim());
 		PeliculaDAO.modificar(peli);
-		Principal.ActualizarTablas();
+		Principal.actualizarPelicula();
+		Principal.actualizarReparto();
 		setVisible(false);
 	}
 

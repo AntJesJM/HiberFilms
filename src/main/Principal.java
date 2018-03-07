@@ -100,8 +100,11 @@ public class Principal extends JFrame implements ActionListener {
 	JButton btnUpdReparto = new JButton("Modificar");
 	JButton btnSeeReparto = new JButton("Ver");
 
+	@SuppressWarnings("rawtypes")
 	static ArrayList arrIdActor = new ArrayList();
+	@SuppressWarnings("rawtypes")
 	static ArrayList arrIdPelicula = new ArrayList();
+	@SuppressWarnings("rawtypes")
 	static ArrayList arrIdReparto = new ArrayList();
 
 	public static JTable tablaActor = new JTable();
@@ -115,11 +118,11 @@ public class Principal extends JFrame implements ActionListener {
 
 	JMenuBar menuBar = new JMenuBar();
 	JMenuItem itemAyuda = new JMenuItem("Ayuda");
-	
-	public Principal()  {
-		
+
+	public Principal() {
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage("ICON HF.png"));
-		
+
 		setResizable(false);
 		setTitle("HiberFilms");
 		getContentPane().setLayout(new GridLayout(1, 1));
@@ -192,9 +195,10 @@ public class Principal extends JFrame implements ActionListener {
 		setSize(500, 300);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		ActualizarTablas();
-		
-		
+		actualizarActor();
+		actualizarReparto();
+		actualizarPelicula();
+
 		insertarAyuda();
 	}
 
@@ -256,11 +260,17 @@ public class Principal extends JFrame implements ActionListener {
 
 		// Acciones de los botones de Reparto
 		if (o.equals(btnNewReparto)) {
-			AnyadirReparto.rellenarActores();
-			AnyadirReparto.rellenarPeliculas();
-			addReparto.setVisible(true);
-		}
-		else if (tablaReparto.getSelectedRow() == unselected && (o.equals(btnDelReparto) || o.equals(btnUpdReparto) || o.equals(btnSeeReparto))) {
+
+			if (arrIdPelicula.isEmpty() || arrIdActor.isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe insertar antes en otra tabla", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				AnyadirReparto.rellenarActores();
+				AnyadirReparto.rellenarPeliculas();
+				addReparto.setVisible(true);
+			}
+		} else if (tablaReparto.getSelectedRow() == unselected
+				&& (o.equals(btnDelReparto) || o.equals(btnUpdReparto) || o.equals(btnSeeReparto))) {
 			JOptionPane.showMessageDialog(getContentPane(), "Debe seleccionar un reparto.", "Aviso",
 					JOptionPane.WARNING_MESSAGE);
 		} else {
@@ -270,7 +280,7 @@ public class Principal extends JFrame implements ActionListener {
 				delReparto.setVisible(true);
 			}
 			if (o.equals(btnUpdReparto)) {
-//				
+
 				idReparto = (Integer) arrIdReparto.get(tablaReparto.getSelectedRow());
 				modReparto.cargarDatos(idReparto);
 				modReparto.setVisible(true);
@@ -283,24 +293,8 @@ public class Principal extends JFrame implements ActionListener {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public static void ActualizarTablas() {
-		// Resteo arrays ids
-		arrIdActor.clear();
+	public static void actualizarPelicula() {
 		arrIdPelicula.clear();
-		arrIdReparto.clear();
-
-		// Tabla actor
-		List<Actor> buscActor = ActorDAO.buscarTodos();
-		DefaultTableModel modActor = (DefaultTableModel) Principal.tablaActor.getModel();
-		int contador = Principal.tablaActor.getRowCount();
-		for (int i = 0; contador > i; i++) {
-			modActor.removeRow(0);
-		}
-		for (Actor act : buscActor) {
-			arrIdActor.add(act.getIdActor());
-			modActor.addRow(new Object[] { act.getNombre(), act.getNacionalidad(), act.getEdad() });
-		}
 		// Tabla pelicula
 		List<Pelicula> buscPelicula = PeliculaDAO.buscarTodos();
 		DefaultTableModel modPelicula = (DefaultTableModel) Principal.tablaPelicula.getModel();
@@ -311,6 +305,10 @@ public class Principal extends JFrame implements ActionListener {
 			arrIdPelicula.add(pel.getIdPelicula());
 			modPelicula.addRow(new Object[] { pel.getTitulo(), pel.getAnio(), pel.getGenero() });
 		}
+	}
+
+	public static void actualizarReparto() {
+		arrIdReparto.clear();
 		// Tabla Reparto
 		List<Reparto> buscReparto = RepartoDAO.buscarTodos();
 		DefaultTableModel modReparto = (DefaultTableModel) Principal.tablaReparto.getModel();
@@ -324,6 +322,22 @@ public class Principal extends JFrame implements ActionListener {
 
 		}
 	}
+
+	public static void actualizarActor() {
+		arrIdActor.clear();
+		// Tabla actor
+		List<Actor> buscActor = ActorDAO.buscarTodos();
+		DefaultTableModel modActor = (DefaultTableModel) Principal.tablaActor.getModel();
+		int contador = Principal.tablaActor.getRowCount();
+		for (int i = 0; contador > i; i++) {
+			modActor.removeRow(0);
+		}
+		for (Actor act : buscActor) {
+			arrIdActor.add(act.getIdActor());
+			modActor.addRow(new Object[] { act.getNombre(), act.getNacionalidad(), act.getEdad() });
+		}
+	}
+
 	private void insertarAyuda() {
 		try {
 			File fichero = new File("help/help_set.hs");
@@ -332,8 +346,7 @@ public class Principal extends JFrame implements ActionListener {
 			HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
 			HelpBroker hb = helpset.createHelpBroker();
 			hb.enableHelpOnButton(itemAyuda, "principal", helpset);
-			hb.enableHelpKey(getContentPane(), "principal",
-					helpset);
+			hb.enableHelpKey(getContentPane(), "principal", helpset);
 
 		} catch (Exception e) {
 			e.printStackTrace();

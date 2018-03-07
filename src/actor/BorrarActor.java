@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 
 import clases.Actor;
 import clasesDAO.ActorDAO;
-import clasesDAO.PeliculaDAO;
 import main.Principal;
 
 public class BorrarActor extends JFrame implements ActionListener {
@@ -53,7 +52,8 @@ public class BorrarActor extends JFrame implements ActionListener {
 
 		if (o.equals(btnAceptar)) {
 			ActorDAO.borrar(ac);
-			Principal.ActualizarTablas();
+			Principal.actualizarActor();
+			Principal.actualizarReparto();
 			setVisible(false);
 		} else {
 			setVisible(false);

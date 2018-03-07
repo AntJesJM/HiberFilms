@@ -58,7 +58,7 @@ public class BorrarReparto extends JFrame implements ActionListener {
 
 		if (o.equals(btnAceptar)) {
 			RepartoDAO.borrar(reparto);
-			Principal.ActualizarTablas();
+			Principal.actualizarReparto();
 			setVisible(false);
 		} else {
 			setVisible(false);

@@ -17,16 +17,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import clases.Actor;
-import clases.Pelicula;
 import clasesDAO.ActorDAO;
-import clasesDAO.PeliculaDAO;
 import main.Principal;
 
 public class ModificarActor extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
-	JDialog dlgconfirmar = new JDialog();
-	JLabel lblconf = new JLabel("¿Está seguro de que quiere modificar?");
+	JDialog dlgConfirmar = new JDialog();
+	JLabel lblConf = new JLabel("¿Está seguro de que quiere modificar?");
 	JButton btnConfirmDia = new JButton("Aceptar");
 	JButton btnCancelDia = new JButton("Cancelar");
 
@@ -63,7 +61,7 @@ public class ModificarActor extends JFrame implements ActionListener {
 			maskNombre = new MaskFormatter("********************");
 			maskApellido = new MaskFormatter("**********************************************************************");
 			maskNacionalidad = new MaskFormatter("********************");
-			maskEdad = new MaskFormatter("###");
+			maskEdad = new MaskFormatter("##");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,7 +72,7 @@ public class ModificarActor extends JFrame implements ActionListener {
 		txtNacionalidad = new JFormattedTextField(maskNacionalidad);
 		txtEdad = new JFormattedTextField(maskEdad);
 
-		dlgconfirmar.setTitle("Confirmación");
+		dlgConfirmar.setTitle("Confirmación");
 		panelDatos.setBorder(new EmptyBorder(0, 10, 0, 10));
 		panelDatos.setLayout(new GridLayout(4, 2));
 		panelBotones.setLayout(new FlowLayout());
@@ -101,13 +99,13 @@ public class ModificarActor extends JFrame implements ActionListener {
 		btnConfirmDia.addActionListener(this);
 		btnCancelDia.addActionListener(this);
 
-		dlgconfirmar.setLayout(new FlowLayout());
-		dlgconfirmar.add(lblconf);
-		dlgconfirmar.add(btnConfirmDia);
-		dlgconfirmar.add(btnCancelDia);
-		dlgconfirmar.setSize(250, 150);
-		dlgconfirmar.setVisible(false);
-		dlgconfirmar.setLocationRelativeTo(null);
+		dlgConfirmar.setLayout(new FlowLayout());
+		dlgConfirmar.add(lblConf);
+		dlgConfirmar.add(btnConfirmDia);
+		dlgConfirmar.add(btnCancelDia);
+		dlgConfirmar.setSize(250, 150);
+		dlgConfirmar.setVisible(false);
+		dlgConfirmar.setLocationRelativeTo(null);
 		setVisible(false);
 
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -124,21 +122,25 @@ public class ModificarActor extends JFrame implements ActionListener {
 		if (o.equals(btnCancel)) {
 			setVisible(false);
 		} else if (o.equals(btnConfirm)) {
+			dlgConfirmar.setVisible(true);
+		}
+
+		if (o.equals(btnConfirmDia)) {
+			dlgConfirmar.setVisible(false);
 			if (txtNombre.getText().trim().isEmpty() || txtApellido.getText().trim().isEmpty()
-					|| txtNacionalidad.getText().trim().isEmpty() || txtEdad.getText().trim().isEmpty()) {
+					|| txtNacionalidad.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar todos los campos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (txtEdad.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(),
+						"Si es menor de 10 años introduzca \n un 0 precediendo la edad", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				actualizarActor();
 				setVisible(false);
 			}
-
-		}
-		if (o.equals(btnConfirmDia)) {
-			dlgconfirmar.setVisible(false);
-			setVisible(false);
 		} else if (o.equals(btnCancelDia)) {
-			dlgconfirmar.setVisible(false);
+			dlgConfirmar.setVisible(false);
 		}
 
 	}
@@ -151,7 +153,8 @@ public class ModificarActor extends JFrame implements ActionListener {
 		ac.setEdad(Integer.parseInt(txtEdad.getText().trim()));
 
 		ActorDAO.modificar(ac);
-		Principal.ActualizarTablas();
+		Principal.actualizarActor();
+		Principal.actualizarReparto();
 		setVisible(false);
 	}
 

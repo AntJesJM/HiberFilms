@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
@@ -23,7 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import actor.AnyadirActor;
 import clases.Actor;
 import clases.Pelicula;
 import clases.Reparto;
@@ -35,7 +33,9 @@ import main.Principal;
 public class ModificarReparto extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("rawtypes")
 	static ArrayList idActores = new ArrayList();
+	@SuppressWarnings("rawtypes")
 	static ArrayList idPeliculas = new ArrayList();
 	boolean prem;
 
@@ -65,7 +65,7 @@ public class ModificarReparto extends JFrame implements ActionListener {
 	// Reparto reprt;
 
 	public ModificarReparto()  {
-		Principal.ActualizarTablas();
+		Principal.actualizarReparto();
 		setTitle("Modificar Reparto");
 		setSize(300, 200);
 		setResizable(false);
@@ -156,11 +156,11 @@ public class ModificarReparto extends JFrame implements ActionListener {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void rellenarActores() {
-		Principal.ActualizarTablas();
+		Principal.actualizarReparto();
 		cActor.removeAll();
 		idActores.clear();
-		// cActor.add("Seleccione actor");
 		List<Actor> busqActor = ActorDAO.buscarTodos();
 		for (Actor a : busqActor) {
 			idActores.add(a.getIdActor());
@@ -168,10 +168,10 @@ public class ModificarReparto extends JFrame implements ActionListener {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void rellenarPeliculas() {
 		cPelicula.removeAll();
 		idPeliculas.clear();
-		// cPelicula.add("Seleccione pelicula");
 		List<Pelicula> busqPel = PeliculaDAO.buscarTodos();
 		for (Pelicula pel : busqPel) {
 			idPeliculas.add(pel.getIdPelicula());
@@ -224,7 +224,7 @@ public class ModificarReparto extends JFrame implements ActionListener {
 		reprt.setActor(actor);
 		reprt.setPelicula(peli);
 		RepartoDAO.modificar(reprt);
-		Principal.ActualizarTablas();
+		Principal.actualizarReparto();
 		setVisible(false);
 	}
 

@@ -15,6 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -32,7 +33,9 @@ import main.Principal;
 public class AnyadirReparto extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("rawtypes")
 	static ArrayList idActor = new ArrayList();
+	@SuppressWarnings("rawtypes")
 	static ArrayList idPelicula = new ArrayList();
 
 	JDialog dlgConfirmar = new JDialog();
@@ -62,7 +65,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 	boolean prem;
 
 	public AnyadirReparto() {
-		
+
 		setTitle("Añadir Reparto");
 		setSize(300, 200);
 		setResizable(false);
@@ -86,7 +89,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 		groupPremio.add(optSi);
 		groupPremio.add(optNo);
-		
+
 		panelGrupoBtns.add(optSi);
 		panelGrupoBtns.add(optNo);
 
@@ -140,9 +143,14 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		}
 		if (o.equals(btnConfirmDia)) {
 			dlgConfirmar.setVisible(false);
-			setVisible(false);
-			crearReparto();
-			txtPapel.setText("");
+			if (txtPapel.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(getContentPane(), "Debe rellenar el campo papel", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				setVisible(false);
+				crearReparto();
+				txtPapel.setText("");
+			}
 
 		} else if (o.equals(btnCancelDia)) {
 			dlgConfirmar.setVisible(false);
@@ -150,6 +158,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void rellenarActores() {
 		cActor.removeAll();
 		idActor.clear();
@@ -160,6 +169,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void rellenarPeliculas() {
 		cPelicula.removeAll();
 		idPelicula.clear();
@@ -182,7 +192,7 @@ public class AnyadirReparto extends JFrame implements ActionListener {
 		Pelicula peli = PeliculaDAO.buscarPorID((Integer) idPelicula.get(idPeliculaCho));
 		Reparto reprt = new Reparto(txtPapel.getText(), prem, peli, actor);
 		RepartoDAO.guardar(reprt);
-		Principal.ActualizarTablas();
+		Principal.actualizarReparto();
 	}
 
 }

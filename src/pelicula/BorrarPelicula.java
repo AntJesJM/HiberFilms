@@ -54,7 +54,8 @@ public class BorrarPelicula extends JFrame implements ActionListener {
 
 		if (o.equals(btnAceptar)) {
 			PeliculaDAO.borrar(peli);
-			Principal.ActualizarTablas();
+			Principal.actualizarPelicula();
+			Principal.actualizarReparto();
 			setVisible(false);
 		} else {
 			setVisible(false);

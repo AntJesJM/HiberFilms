@@ -130,6 +130,7 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(getContentPane(), "Introduzca un valor entre 1895 y 2030", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
+				dlgConfirmar.setVisible(false);
 				crearPelicula();
 				setVisible(false);
 				txtTitulo.setText("");
@@ -156,7 +157,7 @@ public class AnyadirPelicula extends JFrame implements ActionListener {
 		Pelicula peli = new Pelicula(txtTitulo.getText().trim(), Integer.parseInt(txtAnio.getText().trim()),
 				txtGenero.getText().trim(), txtDirector.getText().trim());
 		PeliculaDAO.guardar(peli);
-		Principal.ActualizarTablas();
+		Principal.actualizarPelicula();
 	}
 
 }
